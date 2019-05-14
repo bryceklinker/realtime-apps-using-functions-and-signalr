@@ -1,6 +1,6 @@
 using System.Net.Http;
 
-namespace Realtime.Presenter.Function.Tests.Fakes
+namespace Realtime.Presenter.Test.Utilities.Fakes
 {
     public class FakeHttpClientFactory : IHttpClientFactory
     {

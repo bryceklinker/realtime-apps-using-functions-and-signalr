@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Realtime.Presenter.Function.Tests.Fakes;
+using Realtime.Presenter.Test.Utilities.Fakes;
 
 namespace Realtime.Presenter.Function.Tests.Common
 {

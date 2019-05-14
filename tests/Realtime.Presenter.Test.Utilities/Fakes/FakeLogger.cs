@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
-namespace Realtime.Presenter.Function.Tests.Fakes
+namespace Realtime.Presenter.Test.Utilities.Fakes
 {
     public class FakeLogger : ILogger
     {

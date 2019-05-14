@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace Realtime.Presenter.Function.Tests.Fakes
+namespace Realtime.Presenter.Test.Utilities.Fakes
 {
     public class FakeLogMessages
     {

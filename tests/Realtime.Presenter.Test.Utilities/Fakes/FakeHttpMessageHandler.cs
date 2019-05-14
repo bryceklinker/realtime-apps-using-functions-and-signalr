@@ -8,12 +8,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Realtime.Presenter.Function.Tests.Fakes
+namespace Realtime.Presenter.Test.Utilities.Fakes
 {
     public class FakeHttpMessageHandler : HttpMessageHandler
     {
         private readonly List<FakedRequest> _fakedRequests;
         private readonly List<HttpRequestMessage> _requests;
+        private readonly List<Task> _requestTasks;
 
         public IEnumerable<HttpRequestMessage> Requests => _requests;
 
@@ -21,16 +22,24 @@ namespace Realtime.Presenter.Function.Tests.Fakes
         {
             _fakedRequests = new List<FakedRequest>();
             _requests = new List<HttpRequestMessage>();
+            _requestTasks = new List<Task>();
         }
         
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            _requests.Add(request);
-            var matchingRequest = _fakedRequests.FirstOrDefault(r => r.DoesMatch(request));
-            if (matchingRequest == null)
-                throw new InvalidOperationException($"No request setup with [{request.Method}] {request.RequestUri}.");
+            var task = Task.Run(async () =>
+            {
+                await Task.Delay(100, cancellationToken);
+                
+                _requests.Add(request);
+                var matchingRequest = _fakedRequests.FirstOrDefault(r => r.DoesMatch(request));
+                if (matchingRequest == null)
+                    throw new InvalidOperationException($"No request setup with [{request.Method}] {request.RequestUri}.");
 
-            return Task.FromResult(matchingRequest.Response);
+                return matchingRequest.Response;
+            }, cancellationToken);
+            _requestTasks.Add(task);
+            return task;
         }
 
         public void SetupGet<T>(string url, T data)
@@ -50,7 +59,12 @@ namespace Realtime.Presenter.Function.Tests.Fakes
             _fakedRequests.Add(new FakedRequest(request, response));
         }
 
-        private string Serialize<T>(T data)
+        public Task WhenAllRequestsFinish()
+        {
+            return Task.WhenAll(_requestTasks);
+        }
+        
+        private static string Serialize<T>(T data)
         {
             return JsonConvert.SerializeObject(data);
         }
