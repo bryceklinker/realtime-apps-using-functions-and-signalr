@@ -1,36 +1,66 @@
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Realtime.Presenter.Function.Presentations.Dtos;
-using Realtime.Presenter.Function.Presentations.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace Realtime.Presenter.Function.Presentations
 {
     public class PresentationsController
     {
-        private readonly IPresentationsService _presentationsService;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _config;
 
-        public PresentationsController(IPresentationsService presentationsService)
+        public PresentationsController(IHttpClientFactory httpClientFactory, IConfiguration config)
         {
-            _presentationsService = presentationsService;
-        }
-        
-        
-        [FunctionName("AddPresentation")]
-        public async Task<IActionResult> AddAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "presentations")] [FromBody] PresentationDto presentation)
-        {
-            var dto = await _presentationsService.AddAsync(presentation);
-            return new OkObjectResult(dto);
+            _httpClientFactory = httpClientFactory;
+            _config = config;
         }
 
-        [FunctionName("GetAllPresentations")]
-        public async Task<IActionResult> GetAllAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "presentations")] HttpRequestMessage req)
+        public async Task<IActionResult> GoToNextSlide(HttpRequestMessage httpRequestMessage)
         {
-            var result = await _presentationsService.GetAllAsync();
-            return new OkObjectResult(result);
+            var client = _httpClientFactory.CreateClient();
+            var request = CreateSignalRRequest();
+            await client.SendAsync(request);
+            return new OkResult();
+        }
+
+        private HttpRequestMessage CreateSignalRRequest()
+        {
+            var hubUrl = $"{_config["SignalR:Endpoint"]}/api/v1/hubs/presentation";
+            var token = GenerateToken(hubUrl);
+            var json = JsonConvert.SerializeObject(new {target = "next-slide", arguments = Array.Empty<object>()});
+
+            return new HttpRequestMessage(HttpMethod.Post, hubUrl)
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json"),
+                Headers =
+                {
+                    Authorization = new AuthenticationHeaderValue("Bearer", token)
+                }
+            };
+        }
+
+        private string GenerateToken(string hubUrl)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["SignalR:Key"]));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var securityHandler = new JwtSecurityTokenHandler();
+            var securityToken = securityHandler.CreateJwtSecurityToken(
+                issuer: null,
+                audience: hubUrl,
+                subject: null,
+                expires: DateTime.UtcNow.AddSeconds(10),
+                signingCredentials: credentials
+            );
+            return securityHandler.WriteToken(securityToken);
+
         }
     }
 }
