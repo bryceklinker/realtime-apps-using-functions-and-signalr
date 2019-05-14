@@ -17,8 +17,4 @@
     <ProjectReference Include="..\..\src\Realtime.Presenter.Function\Realtime.Presenter.Function.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common" />
-  </ItemGroup>
-
 </Project>

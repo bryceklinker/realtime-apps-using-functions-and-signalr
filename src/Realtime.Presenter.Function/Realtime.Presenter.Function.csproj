@@ -18,7 +18,4 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\SignalR" />
-  </ItemGroup>
 </Project>
