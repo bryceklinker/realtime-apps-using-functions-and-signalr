@@ -25,8 +25,8 @@ namespace Realtime.Presenter.Function.Tests.Presentations
         {
             HttpClient.SetupPost($"{ConfigurationFactory.SignalREndpoint}/api/v1/hubs/presentation", HttpStatusCode.Accepted);
             
-            var response = await _controller.GoToNextSlide(new HttpRequestMessage());
-            response.Should().BeOfType<OkResult>();
+            var result = await _controller.GoToNextSlide(new HttpRequestMessage());
+            result.Should().BeOfType<OkResult>();
             await HttpClient.Requests.First().Should().BeASignalRRequest("presentation", "nextSlide");
         }
 
@@ -35,9 +35,27 @@ namespace Realtime.Presenter.Function.Tests.Presentations
         {
             HttpClient.SetupPost($"{ConfigurationFactory.SignalREndpoint}/api/v1/hubs/presentation", HttpStatusCode.Accepted);
             
-            var response = await _controller.GoToPreviousSlide(new HttpRequestMessage());
-            response.Should().BeOfType<OkResult>();
+            var result = await _controller.GoToPreviousSlide(new HttpRequestMessage());
+            result.Should().BeOfType<OkResult>();
             await HttpClient.Requests.First().Should().BeASignalRRequest("presentation", "previousSlide");
+        }
+
+        [Fact]
+        public async Task ShouldFailWhenSignalRDoesNotAcceptNextSlide()
+        {
+            HttpClient.SetupPost($"{ConfigurationFactory.SignalREndpoint}/api/v1/hubs/presentation", HttpStatusCode.BadRequest);
+            
+            var result = await _controller.GoToNextSlide(new HttpRequestMessage());
+            result.Should().BeOfType<BadRequestResult>();
+        }
+        
+        [Fact]
+        public async Task ShouldFailWhenSignalRDoesNotAcceptPreviousSlide()
+        {
+            HttpClient.SetupPost($"{ConfigurationFactory.SignalREndpoint}/api/v1/hubs/presentation", HttpStatusCode.BadRequest);
+            
+            var result = await _controller.GoToPreviousSlide(new HttpRequestMessage());
+            result.Should().BeOfType<BadRequestResult>();
         }
     }
 }

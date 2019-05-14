@@ -1,5 +1,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -35,12 +36,14 @@ namespace Realtime.Presenter.Function.Common.SignalR
             var token = GenerateJwtToken(hubUrl);
             var request = CreateHttpRequest(hubUrl, token, target);
             var client = _httpClientFactory.CreateClient();
-            await client.SendAsync(request);
+            var response = await client.SendAsync(request);
+            if (response.StatusCode != HttpStatusCode.Accepted)
+                throw new HttpRequestException($"Request to SignalR failed: {hubName} [{response.StatusCode}]");
         }
 
         private static HttpRequestMessage CreateHttpRequest(string hubUrl, string token, string target)
         {
-            var json = JsonConvert.SerializeObject(new {target = target, arguments = Array.Empty<object>()});
+            var json = JsonConvert.SerializeObject(new {target, arguments = Array.Empty<object>()});
             return new HttpRequestMessage(HttpMethod.Post, hubUrl)
             {
                 Content = new StringContent(json, Encoding.UTF8, "application/json"),

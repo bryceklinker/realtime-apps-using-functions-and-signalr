@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,16 +21,30 @@ namespace Realtime.Presenter.Function.Presentations
         public async Task<IActionResult> GoToNextSlide(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "nextSlide")] HttpRequestMessage httpRequestMessage)
         {
-            await _signalRService.SendAsync("presentation", "nextSlide");
-            return new OkResult();
+            try
+            {
+                await _signalRService.SendAsync("presentation", "nextSlide");
+                return new OkResult();
+            }
+            catch (Exception e)
+            {
+                return new BadRequestResult();
+            }
         }
 
         [FunctionName("GoToPreviousSlide")]
         public async Task<IActionResult> GoToPreviousSlide(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "previousSlide")] HttpRequestMessage httpRequestMessage)
         {
-            await _signalRService.SendAsync("presentation", "previousSlide");
-            return new OkResult();
+            try
+            {
+                await _signalRService.SendAsync("presentation", "previousSlide");
+                return new OkResult();
+            }
+            catch (Exception e)
+            {
+                return new BadRequestResult();
+            }
         }
     }
 }
