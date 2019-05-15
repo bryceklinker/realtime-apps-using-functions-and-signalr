@@ -1,14 +1,33 @@
 import React from "react";
-import {Grid, Typography} from "@material-ui/core";
+import {createStyles, Grid, Typography, WithStyles, withStyles} from "@material-ui/core";
 
-export function OpeningSlide() {
+interface Props extends WithStyles<typeof styles> {
+
+}
+
+function OpeningSlideComponent({ classes }: Props) {
     return (
         <Grid container>
             <Grid item xs={12}>
                 <Typography variant={'h3'}>
-                    Building Realtime Apps with Azure Functions and SignalR
+                    Welcome .NET@Noon
+                </Typography>
+            </Grid>
+            <Grid item xs={12} className={classes.spacer}>
+            </Grid>
+            <Grid item xs={12}>
+                <Typography variant={'h3'}>
+                    Thanks to Industry X.O for hosting.
                 </Typography>
             </Grid>
         </Grid>
     );
 }
+
+const styles = createStyles({
+    spacer: {
+        flexGrow: 1
+    }
+});
+
+export const OpeningSlide = withStyles(styles)(OpeningSlideComponent);

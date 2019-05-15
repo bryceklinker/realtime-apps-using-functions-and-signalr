@@ -8,7 +8,7 @@ import {configureMockStore} from "../../../testing/configure-mock-store";
 describe('SlidePresenterContainer', () => {
     it('should show the current slide', async () => {
         const { getByText } = renderContainer();
-        await waitForElement(() => getByText(/Building/));
+        await waitForElement(() => getByText(/Welcome/));
     });
 
     function renderContainer() {

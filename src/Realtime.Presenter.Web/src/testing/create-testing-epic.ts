@@ -5,8 +5,9 @@ import {Observable, Subject} from "rxjs";
 import {AppState} from "../app/shared/app-state";
 import {createRootEpic} from "../app/shared/root-epic";
 import {createState} from "./create-state";
+import {EpicDependencies} from "../app/shared/epic-dependencies";
 
-export function createTestingEpic(epic: Epic | null = null, ...actions: Action[]): TestingEpic {
+export function createTestingEpic(epic: Epic<Action, Action, AppState, EpicDependencies> | null = null, ...actions: Action[]): TestingEpic {
     return new TestingEpic(epic, ...actions);
 }
 
@@ -17,15 +18,16 @@ export class TestingEpic {
     epic: Epic;
     output$: Observable<Action>;
 
-    constructor(epic: Epic | null = null, ...actions: Action[]) {
+    constructor(epic: Epic<Action, Action, AppState, EpicDependencies> | null = null, ...actions: Action[]) {
         this.actions$ = new Subject<Action>();
         this.state$ = new Subject<AppState>();
         this.epic = epic || createRootEpic();
         this.initialState = createState(...actions);
+
         this.output$ = this.epic(
             new ActionsObservable<Action>(this.actions$),
             new StateObservable(this.state$, this.initialState),
-            { }
+            {}
         );
     }
 
