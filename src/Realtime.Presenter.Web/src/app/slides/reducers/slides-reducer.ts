@@ -7,7 +7,7 @@ import {OpeningSlide} from "../components/OpeningSlide";
 
 export interface SlidesState {
     currentSlideIndex: number;
-    slides: (() => JSX.Element)[];
+    slides: any[];
 }
 
 const initialState: SlidesState = {

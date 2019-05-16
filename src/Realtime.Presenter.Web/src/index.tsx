@@ -5,6 +5,7 @@ import {App} from "./app/App";
 import {createTheme} from "./app/shared/create-theme";
 import {configureStore} from "./app/shared/configure-store";
 
+import './index.scss';
 const history = createBrowserHistory();
 const store = configureStore(history);
 const theme = createTheme();
