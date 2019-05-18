@@ -12,6 +12,11 @@ namespace Realtime.Presenter.Function.Tests.Common
         {
             return new JwtTokenAssertions(header);
         }
+
+        public static JwtTokenAssertions JwtShould(this string token)
+        {
+            return new JwtTokenAssertions(token);
+        }
     }
     
     public class JwtTokenAssertions : ReferenceTypeAssertions<AuthenticationHeaderValue, JwtTokenAssertions>
@@ -19,6 +24,12 @@ namespace Realtime.Presenter.Function.Tests.Common
         protected override string Identifier { get; } = typeof(AuthenticationHeaderValue).Name;
 
         private JwtSecurityTokenHandler JwtHandler { get; }
+
+        public JwtTokenAssertions(string token)
+            : this(new AuthenticationHeaderValue("Bearer", token))
+        {
+            
+        }
         
         public JwtTokenAssertions(AuthenticationHeaderValue subject)
         {

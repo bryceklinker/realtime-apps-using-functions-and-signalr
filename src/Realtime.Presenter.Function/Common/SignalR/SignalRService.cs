@@ -1,44 +1,50 @@
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Realtime.Presenter.Function.Credentials.Dtos;
 
 namespace Realtime.Presenter.Function.Common.SignalR
 {
     public interface ISignalRService
     {
-        Task SendAsync(string hubName, string target);
+        Task SendAsync(string target);
+        CredentialsDto GenerateClientCredentials();
     }
     
     public class SignalRService : ISignalRService
     {
+        private const string HubName = "presenter";
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IConfiguration _config;
+        private readonly ISignalRTokenGenerator _tokenGenerator;
+        private readonly ISignalRUrlGenerator _urlGenerator;
 
-        private string Key => _config["SignalR:Key"];
-        private string Endpoint => _config["SignalR:Endpoint"];
-        
-        public SignalRService(IConfiguration config, IHttpClientFactory httpClientFactory)
+        public SignalRService(IHttpClientFactory httpClientFactory, ISignalRTokenGenerator tokenGenerator, ISignalRUrlGenerator urlGenerator)
         {
             _httpClientFactory = httpClientFactory;
-            _config = config;
+            _tokenGenerator = tokenGenerator;
+            _urlGenerator = urlGenerator;
         }
 
-        public async Task SendAsync(string hubName, string target)
+        public async Task SendAsync(string target)
         {
-            var hubUrl = GetHubUrl(hubName);
-            var token = GenerateJwtToken(hubUrl);
+            var hubUrl = _urlGenerator.ServerUrl(HubName);
+            var token = _tokenGenerator.GenerateToken(hubUrl, DateTime.UtcNow.AddSeconds(10));
             var request = CreateHttpRequest(hubUrl, token, target);
             var client = _httpClientFactory.CreateClient();
             var response = await client.SendAsync(request);
             if (response.StatusCode != HttpStatusCode.Accepted)
-                throw new HttpRequestException($"Request to SignalR failed: {hubName} [{response.StatusCode}]");
+                throw new HttpRequestException($"Request to SignalR failed: {HubName} [{response.StatusCode}]");
+        }
+
+        public CredentialsDto GenerateClientCredentials()
+        {
+            var hubUrl = _urlGenerator.ClientUrl(HubName);
+            var token = _tokenGenerator.GenerateToken(hubUrl, DateTime.UtcNow.AddHours(4));
+            return new CredentialsDto(hubUrl, token);
         }
 
         private static HttpRequestMessage CreateHttpRequest(string hubUrl, string token, string target)
@@ -52,26 +58,6 @@ namespace Realtime.Presenter.Function.Common.SignalR
                     Authorization = new AuthenticationHeaderValue("Bearer", token)
                 }
             };
-        }
-        
-        private string GenerateJwtToken(string hubUrl)
-        {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Key));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var securityHandler = new JwtSecurityTokenHandler();
-            var securityToken = securityHandler.CreateJwtSecurityToken(
-                issuer: null,
-                audience: hubUrl,
-                subject: null,
-                expires: DateTime.UtcNow.AddSeconds(10),
-                signingCredentials: credentials
-            );
-            return securityHandler.WriteToken(securityToken);
-        }
-
-        private string GetHubUrl(string hubName)
-        {
-            return $"{Endpoint}/api/v1/hubs/{hubName}";
         }
     }
 }

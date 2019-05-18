@@ -23,7 +23,7 @@ namespace Realtime.Presenter.Function.Presentations
         {
             try
             {
-                await _signalRService.SendAsync("presentation", "nextSlide");
+                await _signalRService.SendAsync("nextSlide");
                 return new OkResult();
             }
             catch (Exception)
@@ -38,7 +38,7 @@ namespace Realtime.Presenter.Function.Presentations
         {
             try
             {
-                await _signalRService.SendAsync("presentation", "previousSlide");
+                await _signalRService.SendAsync("previousSlide");
                 return new OkResult();
             }
             catch (Exception)

@@ -5,7 +5,7 @@ namespace Realtime.Presenter.Function.Tests.Fakes
 {
     public class ConfigurationFactory
     {
-        public const string SignalREndpoint = "https://signalr.com/";
+        public const string SignalREndpoint = "https://signalr.com";
         public const string SignalRKey = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=";
 
         public IConfiguration Create()

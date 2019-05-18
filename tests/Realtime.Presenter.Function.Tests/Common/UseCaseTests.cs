@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -49,6 +50,12 @@ namespace Realtime.Presenter.Function.Tests.Common
         public T Get<T>()
         {
             return _provider.GetService<T>();
+        }
+
+        public T GetObjectResult<T>(IActionResult result)
+        {
+            var okResult = (OkObjectResult) result;
+            return (T) okResult.Value;
         }
     }
 }
