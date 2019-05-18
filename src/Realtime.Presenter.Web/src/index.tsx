@@ -4,6 +4,7 @@ import {createBrowserHistory} from 'history';
 import {App} from "./app/App";
 import {createTheme} from "./app/shared/create-theme";
 import {configureStore} from "./app/shared/configure-store";
+import {initialize} from "./app/shared/actions";
 
 import './index.scss';
 const history = createBrowserHistory();
@@ -13,3 +14,5 @@ render(
     <App theme={theme} store={store} history={history}/>,
     document.getElementById('root')
 );
+
+store.dispatch(initialize());

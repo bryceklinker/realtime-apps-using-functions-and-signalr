@@ -19,7 +19,7 @@ describe('signalRMiddleware', () => {
         createHubConnection = jest.fn().mockReturnValue(hubConnection);
         credentials = {
             signalRToken: 'this-is-my-token',
-            signalRHubUrl: 'https://signalr.com'
+            signalRUrl: 'https://signalr.com'
         };
 
         store = configureMockStore([createSignalRMiddleware(createHubConnection)]);

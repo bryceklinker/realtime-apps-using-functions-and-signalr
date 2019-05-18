@@ -18,7 +18,7 @@ describe('credentialsEpic', () => {
 
         testingEpic.onAction(SharedActionTypes.LOAD_CREDENTIALS_SUCCESS)
             .subscribe((action: PayloadAction<string, Credentials>) => {
-                expect(action.payload.signalRHubUrl).toEqual(credentials.signalRHubUrl);
+                expect(action.payload.signalRUrl).toEqual(credentials.signalRHubUrl);
                 expect(action.payload.signalRToken).toEqual(credentials.signalRToken);
                 done();
             });

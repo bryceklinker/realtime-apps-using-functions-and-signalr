@@ -1,5 +1,7 @@
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 using Realtime.Presenter.Function.Common.SignalR;
 
 namespace Realtime.Presenter.Function.Credentials
@@ -13,7 +15,9 @@ namespace Realtime.Presenter.Function.Credentials
             _signalRService = signalRService;
         }
 
-        public IActionResult GetCredentials(HttpRequestMessage httpRequestMessage)
+        [FunctionName("GetCredentials")]
+        public IActionResult GetCredentials(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "credentials")] HttpRequestMessage httpRequestMessage)
         {
             var credentials = _signalRService.GenerateClientCredentials();
             return new OkObjectResult(credentials);
