@@ -13,12 +13,12 @@ describe('credentialsEpic', () => {
     });
 
     it('should notify credentials were loaded successfully', done => {
-        const credentials = {signalRHubUrl: 'https://signalr.com/clients?hubName=something', signalRToken: 'this-is-a-token'};
+        const credentials: Credentials = {signalRUrl: 'https://signalr.com/clients?hubName=something', signalRToken: 'this-is-a-token'};
         fetchMock.mockResponse(JSON.stringify(credentials));
 
         testingEpic.onAction(SharedActionTypes.LOAD_CREDENTIALS_SUCCESS)
             .subscribe((action: PayloadAction<string, Credentials>) => {
-                expect(action.payload.signalRUrl).toEqual(credentials.signalRHubUrl);
+                expect(action.payload.signalRUrl).toEqual(credentials.signalRUrl);
                 expect(action.payload.signalRToken).toEqual(credentials.signalRToken);
                 done();
             });

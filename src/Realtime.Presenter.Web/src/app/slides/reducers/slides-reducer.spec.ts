@@ -18,10 +18,25 @@ describe('slidesReducer', () => {
         state = slidesReducer(state, goToNextSlide());
         state = slidesReducer(state, goToPreviousSlide());
         expect(state.currentSlideIndex).toEqual(0);
-    })
+    });
 
     it('should have slides ordered and ready', () => {
+        const state = slidesReducer();
+        expect(state.slides).toHaveLength(4);
+    });
+
+    it('should stay on current slide if current is at the start', () => {
         let state = slidesReducer();
-        expect(state.slides).toHaveLength(1);
+        state = slidesReducer(state, goToPreviousSlide());
+        expect(state.currentSlideIndex).toEqual(0);
+    });
+
+    it('should not go past the last slide', () => {
+        let state = slidesReducer();
+        const slides = state.slides;
+        slides.forEach(() => state = slidesReducer(state, goToNextSlide()));
+        state = slidesReducer(state, goToNextSlide());
+
+        expect(state.currentSlideIndex).toEqual(state.slides.length - 1);
     })
 });

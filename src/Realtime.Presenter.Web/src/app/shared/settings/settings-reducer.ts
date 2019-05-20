@@ -10,6 +10,7 @@ export interface SettingsState {
 }
 
 const initialState: SettingsState = {
+    // baseUrl: 'https://realtime-apps-presentation-func.azurewebsites.net'
     baseUrl: 'http://localhost:7071'
 }
 

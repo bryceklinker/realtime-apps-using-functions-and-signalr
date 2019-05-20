@@ -1,12 +1,33 @@
 import React from "react";
-import {Grid} from "@material-ui/core";
+import {createStyles, Grid, withStyles, WithStyles} from "@material-ui/core";
+import {SlideToolbar} from "./SlideToolbar";
 
-export function SlidePresenter({ slide:SlideComponent }) {
+interface Props extends WithStyles<typeof styles> {
+    slide: any;
+    onNextSlide: () => void;
+    onPreviousSlide: () => void;
+}
+
+function SlidePresenterComponent({ slide:SlideComponent, classes, onNextSlide, onPreviousSlide }) {
     return (
-        <Grid container>
-            <Grid item xs={12}>
+        <div className={classes.root}>
+            <div>
                 <SlideComponent />
-            </Grid>
-        </Grid>
+            </div>
+            <div className={classes.toolbar}>
+                <SlideToolbar onNextSlide={onNextSlide} onPreviousSlide={onPreviousSlide}/>
+            </div>
+        </div>
     )
 }
+
+const styles = createStyles({
+    root: {
+        gridTemplateRows: 'auto 64px'
+    },
+    toolbar: {
+        maxHeight: '64px'
+    }
+});
+
+export const SlidePresenter = withStyles(styles)(SlidePresenterComponent);
