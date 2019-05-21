@@ -1,6 +1,8 @@
 import React from "react";
 import {createStyles, Typography, withStyles, WithStyles} from "@material-ui/core";
 import {SlideTitle} from "./common/SlideTitle";
+import {BulletList} from "./common/BulletList";
+import {BulletListItem} from "./common/BulletListItem";
 
 interface Props extends WithStyles<typeof styles> {
 
@@ -11,14 +13,14 @@ function AgendaSlideComponent({ classes }: Props) {
       <div className={classes.root}>
           <SlideTitle title={'Agenda'}/>
         <div className={classes.list}>
-            <ul>
-                <li><Typography variant={'h4'}>What is Azure Functions?</Typography></li>
-                <li><Typography variant={'h4'}>Azure Functions v1 vs v2</Typography></li>
-                <li><Typography variant={'h4'}>What is Azure SignalR?</Typography></li>
-                <li><Typography variant={'h4'}>Code</Typography></li>
-                <li><Typography variant={'h4'}>Questions?</Typography></li>
-                <li><Typography variant={'h4'}>Thank you</Typography></li>
-            </ul>
+            <BulletList>
+                <BulletListItem text={'What is Azure Functions?'} />
+                <BulletListItem text={'Azure Functions v1 vs v2'} />
+                <BulletListItem text={'What is Azure SignalR?'} />
+                <BulletListItem text={'Code'} />
+                <BulletListItem text={'Questions?'} />
+                <BulletListItem text={'Thank you'} />
+            </BulletList>
         </div>
       </div>
     );

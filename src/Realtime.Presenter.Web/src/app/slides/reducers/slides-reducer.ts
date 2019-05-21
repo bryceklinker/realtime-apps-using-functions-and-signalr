@@ -6,7 +6,9 @@ import {AppState} from "../../shared/app-state";
 import {OpeningSlide} from "../components/slides/OpeningSlide";
 import {AgendaSlide} from "../components/slides/AgendaSlide";
 import {WhatIsAzureFunctionsSlide} from "../components/slides/WhatIsAzureFunctionsSlide";
-import {AzureFunctionsV1VsV2} from "../components/slides/AzureFunctionsV1VsV2";
+import {AzureFunctionsV1VsV2Slide} from "../components/slides/AzureFunctionsV1VsV2Slide";
+import {ReferencesSlide} from "../components/slides/ReferencesSlide";
+import {WhatIsAzureSignalRSlide} from "../components/slides/WhatIsAzureSignalRSlide";
 
 export interface SlidesState {
     currentSlideIndex: number;
@@ -19,7 +21,9 @@ const initialState: SlidesState = {
         OpeningSlide,
         AgendaSlide,
         WhatIsAzureFunctionsSlide,
-        AzureFunctionsV1VsV2
+        AzureFunctionsV1VsV2Slide,
+        WhatIsAzureSignalRSlide,
+        ReferencesSlide
     ]
 };
 
