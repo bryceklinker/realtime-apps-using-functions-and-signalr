@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -9,21 +10,16 @@ namespace Realtime.Presenter.Mobile.Common.Configuration
         string Endpoint { get; }
     }
     
-    public class Config
+    public class Config : IConfig
     {
-        private readonly JObject _settings;
+        private readonly Lazy<JObject> _lazySettings = new Lazy<JObject>(GetSettings);
 
-        public string Endpoint => _settings.Value<string>("Endpoint");
-
-        public Config()
-        {
-            _settings = GetSettings();
-        }
+        public string Endpoint => _lazySettings.Value.Value<string>("Endpoint");
 
         private static JObject GetSettings()
         {
             var applicationType = typeof(App);
-            using (var stream = applicationType.Assembly.GetManifestResourceStream($"{applicationType.Namespace}"))
+            using (var stream = applicationType.Assembly.GetManifestResourceStream($"{applicationType.Namespace}.appsettings.json"))
             using (var reader = new StreamReader(stream))
             {
                 return JObject.Load(new JsonTextReader(reader));

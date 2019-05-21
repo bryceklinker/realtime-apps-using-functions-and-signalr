@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Realtime.Presenter.Mobile.Common.Configuration;
 using Realtime.Presenter.Mobile.Common.ErrorHandling;
 using Realtime.Presenter.Mobile.Common.Messaging;
 using Realtime.Presenter.Mobile.Common.ViewModels;
@@ -20,6 +21,7 @@ namespace Realtime.Presenter.Mobile
                 .AddSingleton<IViewProvider, ViewProvider>()
                 .AddSingleton<IMessageBus, MessageBus>()
                 .AddTransient<IPresentationService, PresentationsService>()
+                .AddTransient<IConfig, Config>()
                 .AddSingleton(MessagingCenter.Instance)
                 .AddTransient<PresentationView>()
                 .AddTransient<PresentationViewModel>();

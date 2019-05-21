@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Realtime.Presenter.Mobile.Presentations.Views.PresentationView">
     <ContentPage.Content>
-        <Grid>
+        <Grid Padding="20">
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -15,9 +16,9 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             
-            <Button Grid.Column="0" Grid.Row="0" Text="Next" Command="{Binding NextCommand}" />
-            <Button Grid.Column="1" Grid.Row="0" Text="Next" Command="{Binding PreviousCommand}" />
-            <StackLayout Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+            <Button Grid.Column="0" Grid.Row="0" Text="Previous" Command="{Binding PreviousCommand}" CornerRadius="10"/>
+            <Button Grid.Column="1" Grid.Row="0" Text="Next" Command="{Binding NextCommand}" CornerRadius="10" />
+            <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
                 <Label Text="Error Count" />
                 <Label Text="{Binding ErrorCount}" />
             </StackLayout>

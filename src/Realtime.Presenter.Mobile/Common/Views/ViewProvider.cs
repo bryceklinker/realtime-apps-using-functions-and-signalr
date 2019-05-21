@@ -19,7 +19,7 @@ namespace Realtime.Presenter.Mobile.Common.Views
 
         public T GetView<T>()
         {
-            return ActivatorUtilities.CreateInstance<T>(_serviceProvider);
+            return _serviceProvider.GetService<T>();
         }
     }
 }

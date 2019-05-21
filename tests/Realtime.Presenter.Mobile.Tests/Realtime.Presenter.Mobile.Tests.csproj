@@ -17,4 +17,8 @@
       <ProjectReference Include="..\Realtime.Presenter.Test.Utilities\Realtime.Presenter.Test.Utilities.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Common\" />
+      <Folder Include="Common\Configuration\" />
+    </ItemGroup>
 </Project>

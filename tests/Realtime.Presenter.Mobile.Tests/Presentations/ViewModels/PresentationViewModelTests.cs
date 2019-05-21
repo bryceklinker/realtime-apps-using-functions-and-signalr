@@ -27,7 +27,7 @@ namespace Realtime.Presenter.Mobile.Tests.Presentations.ViewModels
             var messageBus = new MessageBus(new MessagingCenter());
             _errorHandler = new ErrorHandler(messageBus);
             var service = new PresentationsService(new FakeConfig(), factory, _errorHandler);
-            _viewModel = new PresentationViewModel(service, _errorHandler, messageBus);
+            _viewModel = new PresentationViewModel(null, service, _errorHandler, messageBus);
         }
 
         [Fact]

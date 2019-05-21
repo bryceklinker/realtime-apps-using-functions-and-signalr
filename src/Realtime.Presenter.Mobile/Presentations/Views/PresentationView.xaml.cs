@@ -8,14 +8,9 @@ namespace Realtime.Presenter.Mobile.Presentations.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PresentationView : ContentPage
     {
-        public PresentationView()
+        public PresentationView(IViewModelProvider viewModelProvider)
         {
             InitializeComponent();
-        }
-
-        public PresentationView(IViewModelProvider viewModelProvider)
-            : this()
-        {
             BindingContext = viewModelProvider.GetViewModel<PresentationViewModel>(Navigation);
         }
     }

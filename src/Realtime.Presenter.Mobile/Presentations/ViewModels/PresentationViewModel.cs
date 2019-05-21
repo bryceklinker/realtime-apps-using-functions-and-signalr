@@ -16,7 +16,7 @@ namespace Realtime.Presenter.Mobile.Presentations.ViewModels
         public ICommand PreviousCommand { get; }
         public int ErrorCount => _errorHandler.ErrorCount;
 
-        public PresentationViewModel(IPresentationService presentationService, IErrorHandler errorHandler, IMessageBus messageBus)
+        public PresentationViewModel(INavigation navigation, IPresentationService presentationService, IErrorHandler errorHandler, IMessageBus messageBus)
         {
             _presentationService = presentationService;
             _errorHandler = errorHandler;
