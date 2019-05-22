@@ -28,6 +28,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Realtime.Presenter.Mobile",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Realtime.Presenter.Mobile.UITests", "tests\Realtime.Presenter.Mobile.UITests\Realtime.Presenter.Mobile.UITests.csproj", "{4C1793E6-1961-4EB3-B5EB-D846D6B7869C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{2E6011F0-A761-4046-8FC7-1B92FEF356B4}"
+ProjectSection(SolutionItems) = preProject
+	azure-pipelines.yml = azure-pipelines.yml
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
