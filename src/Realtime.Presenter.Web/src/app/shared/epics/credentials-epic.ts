@@ -6,11 +6,12 @@ import {fromPromise} from "rxjs/internal-compatibility";
 import {loadCredentialsFailed, loadCredentialsSuccess, SharedActionTypes} from "../actions";
 import {of} from "rxjs";
 import {AppState} from "../app-state";
-import {selectSettingsBaseUrl} from "../settings/settings-reducer";
+import {selectSettingsBaseUrl} from "../../settings/reducers/settings-reducer";
+import {SettingsActionTypes} from "../../settings/actions";
 
 export function credentialsEpic(actions$: ActionsObservable<Action>, state$: StateObservable<AppState>) {
     return actions$.pipe(
-        ofType(SharedActionTypes.INITIALIZE),
+        ofType(SharedActionTypes.INITIALIZE, SettingsActionTypes.UPDATED),
         withLatestFrom(state$),
         switchMap(([, state]) => getCredentials(state).pipe(
                 map(result => loadCredentialsSuccess(result)),

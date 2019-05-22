@@ -2,18 +2,24 @@ import {createTestingEpic, TestingEpic} from "../../../testing/create-testing-ep
 import {initialize, SharedActionTypes} from "../actions";
 import {PayloadAction} from "typesafe-actions";
 import {Credentials} from "../models";
-import {settingsUpdateBaseUrl} from "../settings/actions";
+import {settingsUpdated} from "../../settings/actions";
+import {createRootReducer} from "../root-reducer";
+import {createMemoryHistory} from "history";
+import {createState} from "../../../testing/create-state";
 
 const BASE_URL = 'https://hello.com';
 describe('credentialsEpic', () => {
     let testingEpic: TestingEpic;
 
     beforeEach(() => {
-        testingEpic = createTestingEpic(null, settingsUpdateBaseUrl(BASE_URL));
+        testingEpic = createTestingEpic(null, settingsUpdated({baseUrl: BASE_URL}));
     });
 
     it('should notify credentials were loaded successfully', done => {
-        const credentials: Credentials = {signalRUrl: 'https://signalr.com/clients?hubName=something', signalRToken: 'this-is-a-token'};
+        const credentials: Credentials = {
+            signalRUrl: 'https://signalr.com/clients?hubName=something',
+            signalRToken: 'this-is-a-token'
+        };
         fetchMock.mockResponse(JSON.stringify(credentials));
 
         testingEpic.onAction(SharedActionTypes.LOAD_CREDENTIALS_SUCCESS)
@@ -36,7 +42,7 @@ describe('credentialsEpic', () => {
         testingEpic.next(initialize());
     });
 
-    it('should get credentials from azure function', done => {
+    it('should get credentials from base url', done => {
         fetchMock.mockResponse(JSON.stringify({}));
 
         testingEpic.onAction(SharedActionTypes.LOAD_CREDENTIALS_SUCCESS)
@@ -46,4 +52,18 @@ describe('credentialsEpic', () => {
             });
         testingEpic.next(initialize());
     });
+
+    it('should get credentials from new base url', done => {
+        fetchMock.mockResponse(JSON.stringify({signalRUrl: 'https://signalr.com'}));
+
+        testingEpic.onAction(SharedActionTypes.LOAD_CREDENTIALS_SUCCESS)
+            .subscribe(() => {
+                expect(fetchMock.mock.calls[3][0]).toEqual('https://one.com/api/credentials');
+                done();
+            });
+
+        const state = createState(settingsUpdated({baseUrl: 'https://one.com'}));
+        testingEpic.state$.next(state);
+        testingEpic.next(settingsUpdated({baseUrl: 'https://one.com'}));
+    })
 });

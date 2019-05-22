@@ -1,24 +1,49 @@
 import React from "react";
-import {AppBar, createStyles, Grid, Theme, Toolbar, Typography, WithStyles, withStyles} from "@material-ui/core";
+import {
+    AppBar,
+    createStyles, Icon,
+    IconButton,
+    Toolbar,
+    Typography,
+    WithStyles,
+    withStyles
+} from "@material-ui/core";
+
 
 interface Props extends WithStyles<typeof styles> {
-
+    onOpenSettings: () => void;
 }
 
-function AppHeaderComponent({ classes }: Props) {
+function AppHeaderComponent({classes, onOpenSettings}: Props) {
     return (
-        <AppBar position={'static'}>
-            <Toolbar>
-                <Typography variant="h3" gutterBottom>
-                    Building Realtime Apps with Azure Functions and SignalR
-                </Typography>
+        <AppBar position={'static'} className={classes.appbar}>
+            <Toolbar className={classes.toolbar}>
+                <div>
+                    <Typography variant="h3" gutterBottom className={classes.title}>
+                        Building Realtime Apps with Azure Functions and SignalR
+                    </Typography>
+                </div>
+                <div>
+                    <IconButton data-testid={'open-settings'} onClick={onOpenSettings}>
+                        <Icon>settings</Icon>
+                    </IconButton>
+                </div>
             </Toolbar>
         </AppBar>
     );
 }
 
 const styles = createStyles({
-
+    appbar: {
+        display: 'grid'
+    },
+    toolbar: {
+        display: 'grid',
+        gridTemplateColumns: 'auto 48px'
+    },
+    title: {
+        margin: 0,
+    }
 });
 
 export const AppHeader = withStyles(styles)(AppHeaderComponent);

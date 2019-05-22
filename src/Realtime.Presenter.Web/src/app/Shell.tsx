@@ -1,8 +1,10 @@
 import {createStyles, Paper, Theme, WithStyles, withStyles} from "@material-ui/core";
-import {AppHeader} from "./header/components/AppHeader";
 import {Route, Switch} from "react-router";
-import {SlidePresenterContainer} from "./slides/containers/SlidePresenterContainer";
 import React from "react";
+
+import {SlidePresenterContainer} from "./slides/containers/SlidePresenterContainer";
+import {SettingsModalContainer} from "./settings/containers/SettingsModalContainer";
+import {AppHeaderContainer} from "./header/containers/AppHeaderContainer";
 
 interface Props extends WithStyles<typeof styles> {
 
@@ -11,12 +13,13 @@ interface Props extends WithStyles<typeof styles> {
 function ShellComponent({ classes }: Props) {
     return (
         <div className={classes.root}>
-            <AppHeader/>
+            <AppHeaderContainer />
             <Paper className={classes.content}>
                 <div className={classes.slideContent}>
                     <Switch>
                         <Route path={'/'} component={SlidePresenterContainer} />
                     </Switch>
+                    <SettingsModalContainer />
                 </div>
             </Paper>
         </div>

@@ -1,10 +1,12 @@
-import {Credentials} from "../models";
-import {HubConnection} from "@aspnet/signalr";
 import {AnyAction, Dispatch, Middleware, Store} from "redux";
+import {PayloadAction} from "typesafe-actions";
+import {HubConnection} from "@aspnet/signalr";
+
+import {Credentials} from "../models";
 import {AppState} from "../app-state";
 import {SharedActionTypes} from "../actions";
-import {PayloadAction} from "typesafe-actions";
 import {goToNextSlide, goToPreviousSlide} from "../../slides/actions";
+import {SettingsActionTypes} from "../../settings/actions";
 
 export function createSignalRMiddleware(createHubConnection: (credentials: Credentials) => HubConnection): Middleware {
     let hubConnection: HubConnection = null;
@@ -13,10 +15,19 @@ export function createSignalRMiddleware(createHubConnection: (credentials: Crede
             case SharedActionTypes.LOAD_CREDENTIALS_SUCCESS:
                 hubConnection = await createAndStartSignalRConnection(<PayloadAction<string, Credentials>>action, createHubConnection, store);
                 break;
+            case SettingsActionTypes.UPDATED:
+                await stopHubConnection(hubConnection);
+                break;
         }
 
         return next(action);
     };
+}
+
+async function stopHubConnection(hubConnection: HubConnection) {
+    if (hubConnection) {
+        await hubConnection.stop();
+    }
 }
 
 async function createAndStartSignalRConnection(

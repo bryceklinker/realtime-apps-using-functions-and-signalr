@@ -1,4 +1,5 @@
 import {MockStore} from "redux-mock-store";
+import {wait} from 'react-testing-library';
 
 import {AppState} from "../app-state";
 import {configureMockStore} from "../../../testing/configure-mock-store";
@@ -7,6 +8,8 @@ import {loadCredentialsSuccess} from "../actions";
 import {Credentials} from "../models";
 import {FakeHubConnection} from "../../../testing/create-fake-hub-connection";
 import {goToNextSlide, goToPreviousSlide} from "../../slides/actions";
+import {settingsUpdated} from "../../settings/actions";
+import {waitForPromises} from "../../../testing/wait-for-promises";
 
 describe('signalRMiddleware', () => {
     let credentials: Credentials;
@@ -33,6 +36,19 @@ describe('signalRMiddleware', () => {
     it('should start signalr connection', () => {
         store.dispatch(loadCredentialsSuccess(credentials));
         expect(hubConnection.start).toHaveBeenCalled();
+    });
+
+    it('should stop signalr connection when settings are changed', async () => {
+        store.dispatch(loadCredentialsSuccess(credentials));
+        await waitForPromises();
+
+        store.dispatch(settingsUpdated({baseUrl: 'something'}));
+        expect(hubConnection.stop).toHaveBeenCalled();
+    });
+
+    it('should work correctly when connection has not started and settings are changed', async () => {
+        store.dispatch(settingsUpdated({baseUrl: 'https://hello.com'}));
+        await waitForPromises();
     });
 
     it('should dispatch next slide action', () => {
