@@ -7,7 +7,7 @@ variables:
 jobs:
 - job: Build
   pool: 
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'macOS-10.14'
   workspace:
     clean: all
   steps:
@@ -15,6 +15,7 @@ jobs:
     inputs:
       command: 'test'
       configuration: '$(BUILD_CONFIGURATION)'
+      arguments: '--logger trx'
       
   - task: DotNetCoreCLI@2
     inputs:
@@ -23,7 +24,7 @@ jobs:
       configuration: '$(BUILD_CONFIGURATION)'
       publishWebProjects: true
       workingDirectory: '$(FUNCTION_DIRECTORY)'
-      
+  
   - task: ArchiveFiles@2
     inputs:
       rootFolderOrFile: '$(PUBLISH_DIRECTORY)'

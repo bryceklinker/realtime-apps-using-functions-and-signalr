@@ -1,5 +1,5 @@
 import React from "react";
-import {createStyles, Typography, withStyles, WithStyles} from "@material-ui/core";
+import {createStyles, withStyles, WithStyles} from "@material-ui/core";
 import {SlideTitle} from "./common/SlideTitle";
 import {BulletList} from "./common/BulletList";
 import {BulletListItem} from "./common/BulletListItem";
@@ -14,6 +14,7 @@ function AgendaSlideComponent({ classes }: Props) {
           <SlideTitle title={'Agenda'}/>
         <div className={classes.list}>
             <BulletList>
+                <BulletListItem text={'Why should you care?'} />
                 <BulletListItem text={'What is Azure Functions?'} />
                 <BulletListItem text={'Azure Functions v1 vs v2'} />
                 <BulletListItem text={'What is Azure SignalR?'} />
