@@ -5,7 +5,7 @@ variables:
   FUNCTION_DIRECTORY: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Function'
   FUNCTION_TESTS_DIRECTORY: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Function.Tests'
   MOBILE_TESTS_DIRECTORY: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Mobile.Tests'
-  ARCHIVED_FUNCTION_PATH: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function'
+  ARCHIVED_FUNCTION_PATH: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function.zip'
 jobs:
 - job: CI
   displayName: CI
