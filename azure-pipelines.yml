@@ -27,7 +27,6 @@ jobs:
     inputs:
       command: 'test'
       configuration: '$(BUILD_CONFIGURATION)'
-      arguments: '--logger trx'
       workingDirectory: '$(FUNCTION_TESTS_DIRECTORY)'
       
   - task: DotNetCoreCLI@2
@@ -35,7 +34,6 @@ jobs:
     inputs:
       command: 'test'
       configuration: '$(BUILD_CONFIGURATION)'
-      arguments: '--logger trx'
       workingDirectory: '$(MOBILE_TESTS_DIRECTORY)'
       
   - task: DotNetCoreCLI@2
