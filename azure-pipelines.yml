@@ -94,7 +94,7 @@ jobs:
     displayName: Copy Website
     inputs:
       sourceFolder: '$(WEB_PUBLISH_DIRECTORY)'
-      targetFilder: '$(WEB_ARTIFACTS_DIRECTORY)'
+      targetFolder: '$(WEB_ARTIFACTS_DIRECTORY)'
 
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifacts
