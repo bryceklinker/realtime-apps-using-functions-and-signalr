@@ -27,14 +27,16 @@ jobs:
     inputs:
       command: 'test'
       configuration: '$(BUILD_CONFIGURATION)'
-      arguments: '--logger trx --no-build --project $(FUNCTION_TESTS_DIRECTORY)'
+      arguments: '--logger trx'
+      workingDirectory: '$(FUNCTION_TESTS_DIRECTORY)'
       
   - task: DotNetCoreCLI@2
     displayName: Forms Tests
     inputs:
       command: 'test'
       configuration: '$(BUILD_CONFIGURATION)'
-      arguments: '--logger trx --no-build --project $(MOBILE_TESTS_DIRECTORY)'
+      arguments: '--logger trx'
+      workingDirectory: '$(MOBILE_TESTS_DIRECTORY)'
       
   - task: DotNetCoreCLI@2
     displayName: Publish Function
