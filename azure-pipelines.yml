@@ -42,6 +42,7 @@ jobs:
       command: 'publish'
       arguments: '--output $(PUBLISH_DIRECTORY)'
       configuration: '$(BUILD_CONFIGURATION)'
+      publishWebProjects: false
       workingDirectory: '$(FUNCTION_DIRECTORY)'
   
   - task: ArchiveFiles@2
