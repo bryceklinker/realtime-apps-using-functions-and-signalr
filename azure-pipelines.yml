@@ -40,11 +40,11 @@ jobs:
       restoreSolution: '**/*.sln'
 
   - task: Bash@3
-      displayName: Install Node Packages
-      inputs:
-        targetType: inline
-        script: yarn
-        workingDirectory: '$(WEB_DIRECTORY)'
+    displayName: Install Node Packages
+    inputs:
+      targetType: inline
+      script: yarn
+      workingDirectory: '$(WEB_DIRECTORY)'
 
   - task: DotNetCoreCLI@2
     displayName: Function Tests
