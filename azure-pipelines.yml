@@ -8,6 +8,7 @@ variables:
   ARCHIVED_FUNCTION_PATH: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function'
 jobs:
 - job: Build
+  displayName: Build $(Build.BuildId)
   pool: 
     vmImage: 'macOS-10.14'
   workspace:
