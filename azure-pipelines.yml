@@ -1,11 +1,17 @@
 name: '$(Build.BuildId)'
 variables:
   BUILD_CONFIGURATION: 'Release'
-  PUBLISH_DIRECTORY: '$(Build.SourcesDirectory)/function-app'
+  
+  FUNCTION_PUBLISH_DIRECTORY: '$(Build.SourcesDirectory)/function-app'
   FUNCTION_DIRECTORY: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Function'
+  ARCHIVED_FUNCTION_PATH: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function.zip'
+
+  WEB_DIRECTORY: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Web'
+  WEB_PUBLISH_DIRECTORY: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Web/dist'
+  WEB_ARTIFACTS_DIRECTORY: '$(Build.ArtifactStagingDirectory)/website'
+  
   FUNCTION_TESTS_DIRECTORY: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Function.Tests'
   MOBILE_TESTS_DIRECTORY: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Mobile.Tests'
-  ARCHIVED_FUNCTION_PATH: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function.zip'
 jobs:
 - job: CI
   displayName: CI
@@ -17,11 +23,29 @@ jobs:
   - task: NuGetToolInstaller@0
     displayName: Install NuGet
 
+  - task: NodeTool@0
+    displayName: Install Node 10
+    inputs:
+      versionSpec: '10.x'
+
+  - task: Bash@3
+    displayName: Install Yarn
+    inputs:
+      targetType: inline
+      script: npm install --global yarn
+
   - task: NuGetCommand@2
     displayName: Restore NuGet Packages
     inputs:
       restoreSolution: '**/*.sln'
-      
+
+  - task: Bash@3
+      displayName: Install Node Packages
+      inputs:
+        targetType: inline
+        script: yarn
+        workingDirectory: '$(WEB_DIRECTORY)'
+
   - task: DotNetCoreCLI@2
     displayName: Function Tests
     inputs:
@@ -35,22 +59,42 @@ jobs:
       command: 'test'
       configuration: '$(BUILD_CONFIGURATION)'
       workingDirectory: '$(MOBILE_TESTS_DIRECTORY)'
-      
+
+  - task: Bash@3
+    displayName: Web Tests
+    inputs:
+      targetType: inline
+      script: yarn test
+      workingDirectory: '$(WEB_DIRECTORY)'
+
   - task: DotNetCoreCLI@2
     displayName: Publish Function
     inputs:
       command: 'publish'
-      arguments: '--output $(PUBLISH_DIRECTORY)'
+      arguments: '--output $(FUNCTION_PUBLISH_DIRECTORY)'
       configuration: '$(BUILD_CONFIGURATION)'
       publishWebProjects: false
       workingDirectory: '$(FUNCTION_DIRECTORY)'
   
+  - task: Bash@3
+    displayName: Publish Website
+    inputs:
+      targetType: inline
+      script: yarn build
+      workingDirectory: '$(WEB_DIRECTORY)'
+  
   - task: ArchiveFiles@2
     displayName: Package Function
     inputs:
-      rootFolderOrFile: '$(PUBLISH_DIRECTORY)'
+      rootFolderOrFile: '$(FUNCTION_PUBLISH_DIRECTORY)'
       includeRootFolder: false
       archiveFile: '$(ARCHIVED_FUNCTION_PATH)'
-      
+
+  - task: CopyFiles@2
+    displayName: Copy Website
+    inputs:
+      sourceFolder: '$(WEB_PUBLISH_DIRECTORY)'
+      targetFilder: '$(WEB_ARTIFACTS_DIRECTORY)'
+
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifacts

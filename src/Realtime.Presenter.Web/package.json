@@ -9,7 +9,8 @@
   "scripts": {
     "test": "jest",
     "test:watch": "yarn test --watch",
-    "start": "webpack-dev-server --config webpack.config.js --inline --hot --progress"
+    "start": "webpack-dev-server --config webpack.config.js --inline --hot --progress",
+    "build": "webpack --config webpack.config.js --mode production --progress"
   },
   "devDependencies": {
     "@babel/core": "7.4.4",
