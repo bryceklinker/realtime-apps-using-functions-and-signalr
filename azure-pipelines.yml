@@ -3,6 +3,8 @@ variables:
   BUILD_CONFIGURATION: 'Release'
   PUBLISH_DIRECTORY: '$(Build.SourcesDirectory)/function-app'
   FUNCTION_DIRECTORY: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Function'
+  FUNCTION_TESTS_DIRECTORY: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Function.Tests'
+  MOBILE_TESTS_DIRECTORY: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Mobile.Tests'
   ARCHIVED_FUNCTION_PATH: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function'
 jobs:
 - job: Build
@@ -11,13 +13,30 @@ jobs:
   workspace:
     clean: all
   steps:
+  - task: NuGetToolInstaller@0
+    displayName: Install NuGet
+
+  - task: NuGetCommand@2
+    displayName: Restore NuGet Packages
+    inputs:
+      restoreSolution: '**/*.sln'
+      
   - task: DotNetCoreCLI@2
+    displayName: Function Tests
     inputs:
       command: 'test'
       configuration: '$(BUILD_CONFIGURATION)'
-      arguments: '--logger trx'
+      arguments: '--logger trx --no-build --project $(FUNCTION_TESTS_DIRECTORY)'
       
   - task: DotNetCoreCLI@2
+      displayName: Forms Tests
+      inputs:
+        command: 'test'
+        configuration: '$(BUILD_CONFIGURATION)'
+        arguments: '--logger trx --no-build --project $(MOBILE_TESTS_DIRECTORY)'
+      
+  - task: DotNetCoreCLI@2
+    displayName: Publish Function
     inputs:
       command: 'publish'
       arguments: '--output $(PUBLISH_DIRECTORY)'
@@ -26,9 +45,11 @@ jobs:
       workingDirectory: '$(FUNCTION_DIRECTORY)'
   
   - task: ArchiveFiles@2
+    displayName: Package Function
     inputs:
       rootFolderOrFile: '$(PUBLISH_DIRECTORY)'
       includeRootFolder: false
       archiveFile: '$(ARCHIVED_FUNCTION_PATH)'
       
   - task: PublishBuildArtifacts@1
+    displayName: Publish Artifacts
