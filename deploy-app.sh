@@ -8,10 +8,15 @@ FUNCTION_APP_NAME='realtime-app-func'
 STORAGE_ACCOUNT_NAME='realtimestorage'
 
 main() {
+    login_to_azure
     create_resource_group_if_not_exists
     create_storage_account_if_not_exists
     create_function_app_if_not_exists
     deploy_function_app
+}
+
+login_to_azure() {
+    az login -u ${AZURE_USERNAME} -p ${AZURE_PASSWORD}
 }
 
 create_resource_group_if_not_exists() {
