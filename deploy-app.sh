@@ -18,7 +18,7 @@ main() {
 }
 
 login_to_azure() {
-    az login -u ${AZURE_USERNAME} -p ${AZURE_PASSWORD}
+    az login --username ${AZURE_USERNAME} --password ${AZURE_PASSWORD}
 }
 
 create_resource_group_if_not_exists() {
