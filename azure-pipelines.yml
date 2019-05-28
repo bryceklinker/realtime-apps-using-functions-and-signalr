@@ -28,23 +28,17 @@ jobs:
     inputs:
       versionSpec: '10.x'
 
-  - task: Bash@3
+  - bash: npm install --global yarn
     displayName: Install Yarn
-    inputs:
-      targetType: inline
-      script: npm install --global yarn
 
   - task: NuGetCommand@2
     displayName: Restore NuGet Packages
     inputs:
       restoreSolution: '**/*.sln'
 
-  - task: Bash@3
+  - bash: yarn
     displayName: Install Node Packages
-    inputs:
-      targetType: inline
-      script: yarn
-      workingDirectory: '$(WEB_DIRECTORY)'
+    workingDirectory: '$(WEB_DIRECTORY)'
 
   - task: DotNetCoreCLI@2
     displayName: Function Tests
@@ -60,12 +54,9 @@ jobs:
       configuration: '$(BUILD_CONFIGURATION)'
       workingDirectory: '$(MOBILE_TESTS_DIRECTORY)'
 
-  - task: Bash@3
+  - bash: yarn test
     displayName: Web Tests
-    inputs:
-      targetType: inline
-      script: yarn test
-      workingDirectory: '$(WEB_DIRECTORY)'
+    workingDirectory: '$(WEB_DIRECTORY)'
 
   - task: DotNetCoreCLI@2
     displayName: Publish Function
@@ -76,12 +67,9 @@ jobs:
       publishWebProjects: false
       workingDirectory: '$(FUNCTION_DIRECTORY)'
   
-  - task: Bash@3
+  - bash: yarn build
     displayName: Publish Website
-    inputs:
-      targetType: inline
-      script: yarn build
-      workingDirectory: '$(WEB_DIRECTORY)'
+    workingDirectory: '$(WEB_DIRECTORY)'
   
   - task: ArchiveFiles@2
     displayName: Package Function
@@ -96,14 +84,11 @@ jobs:
       sourceFolder: '$(WEB_PUBLISH_DIRECTORY)'
       targetFolder: '$(WEB_ARTIFACTS_DIRECTORY)'
 
-  - task: Bash@3
+  - bash: ./deploy-app.sh
     displayName: Deploy Function App
-    inputs:
-      targetType: filePath
-      filePath: './deploy-app.sh'
-      env:
-        AZURE_USERNAME: $(AZURE_USERNAME)
-        AZURE_PASSWORD: $(AZURE_PASSWORD)
+    env:
+      AZURE_USERNAME: $(AZURE_USERNAME)
+      AZURE_PASSWORD: $(AZURE_PASSWORD)
 
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifacts
