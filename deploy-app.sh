@@ -7,6 +7,8 @@ RESOURCE_GROUP_NAME='realtime-app-rg'
 FUNCTION_APP_NAME='realtime-app-func'
 STORAGE_ACCOUNT_NAME='realtimestorage'
 
+printenv
+
 main() {
     login_to_azure
     create_resource_group_if_not_exists
