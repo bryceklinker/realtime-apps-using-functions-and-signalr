@@ -24,7 +24,7 @@ login_to_azure() {
 }
 
 create_resource_group_if_not_exists() {
-    EXISTS=$(az group exists -n ${RESOURCE_GROUP_NAME} | jq length)
+    EXISTS=$(az group exists -n "${RESOURCE_GROUP_NAME}" | jq length)
 
     if [ "${EXISTS}" = "false" ]; then 
         az group create -l "${LOCAITON}" -n "${RESOURCE_GROUP_NAME}"
