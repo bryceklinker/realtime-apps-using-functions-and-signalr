@@ -19,7 +19,7 @@ main() {
 
 login_to_azure() {
     echo 'Logging in to azure...'
-    az login --username "${AZURE_USERNAME}" --password "${AZURE_PASSWORD}"
+    az login --username $AZURE_USERNAME --password $AZURE_PASSWORD
     echo 'Finished logging into azure.'
 }
 
