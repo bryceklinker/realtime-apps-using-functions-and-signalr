@@ -1,17 +1,33 @@
 name: '$(Build.BuildId)'
 variables:
-  BUILD_CONFIGURATION: 'Release'
-  
-  FUNCTION_PUBLISH_DIRECTORY: '$(Build.SourcesDirectory)/function-app'
-  FUNCTION_DIRECTORY: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Function'
-  ARCHIVED_FUNCTION_PATH: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function.zip'
+  - group: 'Accenture Azure Credentials'
+  - name: BUILD_CONFIGURATION
+    value: 'Release'
 
-  WEB_DIRECTORY: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Web'
-  WEB_PUBLISH_DIRECTORY: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Web/dist'
-  WEB_ARTIFACTS_DIRECTORY: '$(Build.ArtifactStagingDirectory)/website'
+  - name: FUNCTION_PUBLISH_DIRECTORY
+    value: '$(Build.SourcesDirectory)/function-app'
+
+  - name: FUNCTION_DIRECTORY
+    value: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Function'
   
-  FUNCTION_TESTS_DIRECTORY: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Function.Tests'
-  MOBILE_TESTS_DIRECTORY: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Mobile.Tests'
+  - name: ARCHIVED_FUNCTION_PATH
+    value: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function.zip'
+
+  - name: WEB_DIRECTORY
+    value: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Web'
+
+  - name: WEB_PUBLISH_DIRECTORY
+    value: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Web/dist'
+  
+  - name: WEB_ARTIFACTS_DIRECTORY
+    value: '$(Build.ArtifactStagingDirectory)/website'
+  
+  - name: FUNCTION_TESTS_DIRECTORY
+    value: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Function.Tests'
+    
+  - name: MOBILE_TESTS_DIRECTORY
+    value: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Mobile.Tests'
+  
 jobs:
 - job: CI
   displayName: CI
