@@ -96,5 +96,12 @@ jobs:
       sourceFolder: '$(WEB_PUBLISH_DIRECTORY)'
       targetFolder: '$(WEB_ARTIFACTS_DIRECTORY)'
 
+  - task: AzureCLI@1
+    displayName: Deploy Function App
+    inputs:
+      azureSubscription: 'Azure VS Pro Subscription'
+      scriptLocation: 'scriptPath'
+      scriptPath: './deploy-app.sh'
+
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifacts
