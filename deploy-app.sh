@@ -3,7 +3,7 @@
 export LOCATION='centralus'
 export RESOURCE_GROUP_NAME='realtime-app-rg'
 export FUNCTION_APP_NAME='realtime-app-func'
-export STORAGE_ACCOUNT_NAME='realtimestorage'
+export STORAGE_ACCOUNT_NAME='realtimepresappstorage'
 export STORAGE_ACCOUNT_CONNECTION_STRING=''
 
 export SIGNALR_NAME='realtime-app-signalr'
