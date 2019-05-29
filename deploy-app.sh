@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 brew install jq
 
@@ -12,8 +11,6 @@ export STORAGE_ACCOUNT_CONNECTION_STRING=''
 export SIGNALR_NAME='realtime-app-signalr'
 export SIGNALR_KEY=''
 export SIGNALR_ENDPOINT="https://${SIGNALR_NAME}.service.signalr.net"
-
-printenv
 
 main() {
     create_resource_group_if_not_exists
@@ -37,9 +34,9 @@ create_resource_group_if_not_exists() {
 
 create_storage_account_if_not_exists() {
     echo "Checking that storage account ${STORAGE_ACCOUNT_NAME} exists..."
-    EXISTS=$(az storage account show -g "${RESOURCE_GROUP_NAME}" -n "${STORAGE_ACCOUNT_NAME}")
+    az storage account show -g "${RESOURCE_GROUP_NAME}" -n "${STORAGE_ACCOUNT_NAME}"
 
-    if [ $EXISTS = 1 ]; then
+    if [ $? = 1 ]; then
         echo "Creating storage account ${STORAGE_ACCOUNT_NAME}..."
         az storage account create -n "${STORAGE_ACCOUNT_NAME}" -g "${RESOURCE_GROUP_NAME}" -l "${LOCATION}"
         echo "Created storage account ${STORAGE_ACCOUNT_NAME}."
@@ -50,9 +47,9 @@ create_storage_account_if_not_exists() {
 
 create_signalr_if_not_exists() {
     echo "Checking that signalr service ${SIGNALR_NAME} exists..."
-    EXISTS=$(az signalr show -n ${SIGNALR_NAME} -g ${RESOURCE_GROUP_NAME})
+    az signalr show -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME}"
 
-    if [ $EXISTS = 1 ]; then
+    if [ $? = 1 ]; then
         echo "Creating signalr ${SIGNALR_NAME}..."
         az signalr create -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME}" --sku "Free_DS2" --location "${LOCATION}"
         echo "Created signalr ${SIGNALR_NAME}."
@@ -61,9 +58,9 @@ create_signalr_if_not_exists() {
 
 create_function_app_if_not_exists() {
     echo "Checking if function app ${FUNCTION_APP_NAME}..."
-    EXISTS=$(az functionapp show -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}")
+    az functionapp show -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}"
 
-    if [ $EXISTS = 1 ]; then
+    if [ $? = 1 ]; then
         echo "Creating function app ${FUNCTION_APP_NAME}..."
         az funcitonapp create --consumption_plan-location "${LOCATION}" -n "${FUNCTION_APP_NAME}" --os-type Windows -g "${RESOURCE_GROUP_NAME}" --runtime dotnet --storage-account "${STORAGE_ACCOUNT_NAME}"
         echo "Created function app ${FUNCTION_APP_NAME}."
