@@ -40,7 +40,7 @@ create_storage_account_if_not_exists() {
         echo "Created storage account ${STORAGE_ACCOUNT_NAME}."
     fi
 
-    STORAGE_ACCOUNT_CONNECTION_STRING=$(az storage account show-connection-string -g "${RESOURCE_GROUP_NAME}" -n "${STORAGE_ACCOUNT_NAME}" | jq .connectionString)
+    STORAGE_ACCOUNT_CONNECTION_STRING=$(az storage account show-connection-string -g "${RESOURCE_GROUP_NAME}" -n "${STORAGE_ACCOUNT_NAME}" | jq .connectionString -r)
 }
 
 create_signalr_if_not_exists() {
@@ -53,7 +53,7 @@ create_signalr_if_not_exists() {
         echo "Created signalr ${SIGNALR_NAME}."
     fi
 
-    SIGNALR_KEY=$(az signalr key list -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME}" | jq .primaryKey)
+    SIGNALR_KEY=$(az signalr key list -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME}" | jq .primaryKey -r)
 }
 
 create_function_app_if_not_exists() {
