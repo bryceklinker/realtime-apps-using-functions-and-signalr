@@ -1,6 +1,5 @@
 name: '$(Build.BuildId)'
 variables:
-  - group: 'Accenture Azure Credentials'
   - name: BUILD_CONFIGURATION
     value: 'Release'
 
@@ -24,7 +23,7 @@ variables:
   
   - name: FUNCTION_TESTS_DIRECTORY
     value: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Function.Tests'
-    
+
   - name: MOBILE_TESTS_DIRECTORY
     value: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Mobile.Tests'
   
@@ -100,11 +99,12 @@ jobs:
       sourceFolder: '$(WEB_PUBLISH_DIRECTORY)'
       targetFolder: '$(WEB_ARTIFACTS_DIRECTORY)'
 
-  - bash: ./deploy-app.sh
+  - task: AzureCLI@1
     displayName: Deploy Function App
-    env:
-      AZURE_USERNAME: $(AZURE_USERNAME)
-      AZURE_PASSWORD: $(AZURE_PASSWORD)
+    inputs:
+      azureSubscription: 'Azure VS Pro Subscription'
+      scriptLocation: 'scriptPath'
+      scriptPath: './deploy-app.sh'
 
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifacts

@@ -10,7 +10,6 @@ STORAGE_ACCOUNT_NAME='realtimestorage'
 printenv
 
 main() {
-    login_to_azure
     create_resource_group_if_not_exists
     create_storage_account_if_not_exists
     create_function_app_if_not_exists
