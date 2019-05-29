@@ -1,13 +1,10 @@
 #!/bin/bash
-
-brew install jq
+set -ex
 
 LOCATION='centralus'
 RESOURCE_GROUP_NAME='realtime-app-rg'
 FUNCTION_APP_NAME='realtime-app-func'
 STORAGE_ACCOUNT_NAME='realtimestorage'
-
-printenv
 
 main() {
     create_resource_group_if_not_exists
@@ -24,7 +21,7 @@ login_to_azure() {
 
 create_resource_group_if_not_exists() {
     echo "Checking that resource group ${RESOURCE_GROUP_NAME} exists.."
-    EXISTS=$(az group exists -n "${RESOURCE_GROUP_NAME}" | jq length)
+    EXISTS=$(az group exists -n "${RESOURCE_GROUP_NAME}")
 
     if [ "${EXISTS}" = "false" ]; then 
         echo "Creating resource group ${RESOURCE_GROUP_NAME}..."
