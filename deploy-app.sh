@@ -36,7 +36,7 @@ create_storage_account_if_not_exists() {
 
     if [ $? != 0 ]; then
         echo "Creating storage account ${STORAGE_ACCOUNT_NAME}..."
-        az storage account create -n "${STORAGE_ACCOUNT_NAME}" -g "${RESOURCE_GROUP_NAME}" -l "${LOCATION}"
+        az storage account create -n "${STORAGE_ACCOUNT_NAME}" -g "${RESOURCE_GROUP_NAME}" -l "${LOCATION}" --sku 'Standard_LRS'
         echo "Created storage account ${STORAGE_ACCOUNT_NAME}."
     fi
 
