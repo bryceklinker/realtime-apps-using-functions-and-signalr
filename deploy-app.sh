@@ -1,7 +1,5 @@
 #!/bin/bash
 
-brew install jq
-
 export LOCATION='centralus'
 export RESOURCE_GROUP_NAME='realtime-app-rg'
 export FUNCTION_APP_NAME='realtime-app-func'
@@ -54,6 +52,8 @@ create_signalr_if_not_exists() {
         az signalr create -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME}" --sku "Free_DS2" --location "${LOCATION}"
         echo "Created signalr ${SIGNALR_NAME}."
     fi
+
+    SIGNALR_KEY=$(az signalr key list -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME} | jq .primaryKey")
 }
 
 create_function_app_if_not_exists() {
@@ -62,11 +62,9 @@ create_function_app_if_not_exists() {
 
     if [ $? = 1 ]; then
         echo "Creating function app ${FUNCTION_APP_NAME}..."
-        az funcitonapp create --consumption_plan-location "${LOCATION}" -n "${FUNCTION_APP_NAME}" --os-type Windows -g "${RESOURCE_GROUP_NAME}" --runtime dotnet --storage-account "${STORAGE_ACCOUNT_NAME}"
+        az functionapp create --consumption_plan-location "${LOCATION}" -n "${FUNCTION_APP_NAME}" --os-type Windows -g "${RESOURCE_GROUP_NAME}" --runtime dotnet --storage-account "${STORAGE_ACCOUNT_NAME}"
         echo "Created function app ${FUNCTION_APP_NAME}."
     fi
-
-    SIGNALR_KEY=$(az signalr key list -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME} | jq .primaryKey")
 }
 
 update_function_app_settings() {
