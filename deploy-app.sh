@@ -62,7 +62,7 @@ create_function_app_if_not_exists() {
 
     if [ $? = 1 ]; then
         echo "Creating function app ${FUNCTION_APP_NAME}..."
-        az functionapp create --consumption_plan-location "${LOCATION}" -n "${FUNCTION_APP_NAME}" --os-type Windows -g "${RESOURCE_GROUP_NAME}" --runtime dotnet --storage-account "${STORAGE_ACCOUNT_NAME}"
+        az functionapp create --consumption-plan-location "${LOCATION}" -n "${FUNCTION_APP_NAME}" --os-type Windows -g "${RESOURCE_GROUP_NAME}" --runtime dotnet --storage-account "${STORAGE_ACCOUNT_NAME}"
         echo "Created function app ${FUNCTION_APP_NAME}."
     fi
 }
