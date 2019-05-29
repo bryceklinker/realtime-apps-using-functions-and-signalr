@@ -72,6 +72,7 @@ update_function_app_settings() {
     az functionapp config appsettings set -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --settings "StorageAccountConnectionString=${STORAGE_ACCOUNT_CONNECTION_STRING}"
     az functionapp config appsettings set -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --settings "SignalR:Endpoint=${SIGNALR_ENDPOINT}"
     az functionapp config appsettings set -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --settings "SignalR:Key=${SIGNALR_KEY}"
+    az functionapp config appsettings set -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --settings "WEBSITE_RUN_FROM_PACKAGE=1"
 
     az functionapp cors remove -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --allowed-origins "*"
     az functionapp cors add -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --allowed-origins "*"
