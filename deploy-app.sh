@@ -13,6 +13,8 @@ export SIGNALR_NAME='realtime-app-signalr'
 export SIGNALR_KEY=''
 export SIGNALR_ENDPOINT="https://${SIGNALR_NAME}.service.signalr.net"
 
+printenv
+
 main() {
     create_resource_group_if_not_exists
     create_storage_account_if_not_exists
