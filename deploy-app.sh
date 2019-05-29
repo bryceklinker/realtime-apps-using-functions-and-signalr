@@ -30,7 +30,7 @@ create_resource_group_if_not_exists() {
 
     if [ "${EXISTS}" = "false" ]; then 
         echo "Creating resource group ${RESOURCE_GROUP_NAME}..."
-        az group create -l "${LOCAITON}" -n "${RESOURCE_GROUP_NAME}"
+        az group create -l "${LOCATION}" -n "${RESOURCE_GROUP_NAME}"
         echo "Created resource group ${RESOURCE_GROUP_NAME}."
     fi
 }
@@ -41,7 +41,7 @@ create_storage_account_if_not_exists() {
 
     if [ $EXISTS = 1 ]; then
         echo "Creating storage account ${STORAGE_ACCOUNT_NAME}..."
-        az storage account create -n "${STORAGE_ACCOUNT_NAME}" -g "${RESOURCE_GROUP_NAME}" -l "${LOCAITON}"
+        az storage account create -n "${STORAGE_ACCOUNT_NAME}" -g "${RESOURCE_GROUP_NAME}" -l "${LOCATION}"
         echo "Created storage account ${STORAGE_ACCOUNT_NAME}."
     fi
 
