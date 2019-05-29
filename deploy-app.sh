@@ -3,15 +3,15 @@ set -e
 
 brew install jq
 
-LOCATION='centralus'
-RESOURCE_GROUP_NAME='realtime-app-rg'
-FUNCTION_APP_NAME='realtime-app-func'
-STORAGE_ACCOUNT_NAME='realtimestorage'
-STORAGE_ACCOUNT_CONNECTION_STRING=''
+export LOCATION='centralus'
+export RESOURCE_GROUP_NAME='realtime-app-rg'
+export FUNCTION_APP_NAME='realtime-app-func'
+export STORAGE_ACCOUNT_NAME='realtimestorage'
+export STORAGE_ACCOUNT_CONNECTION_STRING=''
 
-SIGNALR_NAME='realtime-app-signalr'
-SIGNALR_KEY=''
-SIGNALR_ENDPOINT="https://${SIGNALR_NAME}.service.signalr.net"
+export SIGNALR_NAME='realtime-app-signalr'
+export SIGNALR_KEY=''
+export SIGNALR_ENDPOINT="https://${SIGNALR_NAME}.service.signalr.net"
 
 main() {
     create_resource_group_if_not_exists
@@ -20,12 +20,6 @@ main() {
     create_function_app_if_not_exists
     update_function_app_settings
     deploy_function_app
-}
-
-login_to_azure() {
-    echo 'Logging in to azure...'
-    az login --username $AZURE_USERNAME --password $AZURE_PASSWORD
-    echo 'Finished logging into azure.'
 }
 
 create_resource_group_if_not_exists() {
