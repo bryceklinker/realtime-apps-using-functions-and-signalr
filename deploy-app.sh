@@ -34,7 +34,7 @@ create_storage_account_if_not_exists() {
     echo "Checking that storage account ${STORAGE_ACCOUNT_NAME} exists..."
     az storage account show -g "${RESOURCE_GROUP_NAME}" -n "${STORAGE_ACCOUNT_NAME}"
 
-    if [ $? = 1 ]; then
+    if [ $? != 0 ]; then
         echo "Creating storage account ${STORAGE_ACCOUNT_NAME}..."
         az storage account create -n "${STORAGE_ACCOUNT_NAME}" -g "${RESOURCE_GROUP_NAME}" -l "${LOCATION}"
         echo "Created storage account ${STORAGE_ACCOUNT_NAME}."
@@ -47,20 +47,20 @@ create_signalr_if_not_exists() {
     echo "Checking that signalr service ${SIGNALR_NAME} exists..."
     az signalr show -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME}"
 
-    if [ $? = 1 ]; then
+    if [ $? != 0 ]; then
         echo "Creating signalr ${SIGNALR_NAME}..."
         az signalr create -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME}" --sku "Free_DS2" --location "${LOCATION}"
         echo "Created signalr ${SIGNALR_NAME}."
     fi
 
-    SIGNALR_KEY=$(az signalr key list -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME} | jq .primaryKey")
+    SIGNALR_KEY=$(az signalr key list -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME}" | jq .primaryKey)
 }
 
 create_function_app_if_not_exists() {
     echo "Checking if function app ${FUNCTION_APP_NAME}..."
     az functionapp show -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}"
 
-    if [ $? = 1 ]; then
+    if [ $? != 0 ]; then
         echo "Creating function app ${FUNCTION_APP_NAME}..."
         az functionapp create --consumption-plan-location "${LOCATION}" -n "${FUNCTION_APP_NAME}" --os-type Windows -g "${RESOURCE_GROUP_NAME}" --runtime dotnet --storage-account "${STORAGE_ACCOUNT_NAME}"
         echo "Created function app ${FUNCTION_APP_NAME}."
