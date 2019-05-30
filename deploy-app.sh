@@ -113,6 +113,7 @@ update_function_app_settings() {
 deploy_function_app() {
     echo "Deploying to ${FUNCTION_APP_NAME}..."
     az functionapp deployment source config-zip -g "${RESOURCE_GROUP_NAME}" -n "${FUNCTION_APP_NAME}" --src "${ARCHIVED_FUNCTION_PATH}"
+    az functionapp restart -g "${RESOURCE_GROUP_NAME}" -n "${FUNCTION_APP_NAME}"
     echo "Deployed to ${FUNCTION_APP_NAME}."
 }
 
