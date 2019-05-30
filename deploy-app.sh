@@ -1,10 +1,12 @@
 #!/bin/bash
 
 export LOCATION='centralus'
+
 export RESOURCE_GROUP_NAME='realtime-app-rg'
 
 export FUNCTION_APP_NAME='realtime-app-func'
 
+export APP_INSIGHTS_LOCATION='southcentralus'
 export APP_INSIGHTS_KEY=''
 
 export STORAGE_ACCOUNT_NAME='realtimepresappstorage'
@@ -72,7 +74,7 @@ create_app_insights_if_not_exists() {
         az resource create -g "${RESOURCE_GROUP_NAME}" \
             -n "${FUNCTION_APP_NAME}-insights" \
             --resource-type "Microsoft.Insights/components" \
-            --location "${LOCATION}" \
+            --location "${APP_INSIGHTS_LOCATION}" \
             --properties '{"Application_Type":"Web"}'
         echo "Created function app ${FUNCTION_APP_NAME}."
     fi
