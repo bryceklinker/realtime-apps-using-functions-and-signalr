@@ -10,7 +10,7 @@ variables:
     value: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Function'
   
   - name: ARCHIVED_FUNCTION_PATH
-    value: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function.zip'
+    value: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function.$(Build.BuildId).zip'
 
   - name: WEB_DIRECTORY
     value: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Web'

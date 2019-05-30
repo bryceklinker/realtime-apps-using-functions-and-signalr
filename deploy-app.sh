@@ -2,7 +2,11 @@
 
 export LOCATION='centralus'
 export RESOURCE_GROUP_NAME='realtime-app-rg'
+
 export FUNCTION_APP_NAME='realtime-app-func'
+
+export APP_INSIGHTS_KEY=''
+
 export STORAGE_ACCOUNT_NAME='realtimepresappstorage'
 export STORAGE_ACCOUNT_CONNECTION_STRING=''
 
@@ -15,8 +19,8 @@ main() {
     create_storage_account_if_not_exists
     create_signalr_if_not_exists
     create_function_app_if_not_exists
-    update_function_app_settings
     deploy_function_app
+    update_function_app_settings
 }
 
 create_resource_group_if_not_exists() {
@@ -56,13 +60,38 @@ create_signalr_if_not_exists() {
     SIGNALR_KEY=$(az signalr key list -n "${SIGNALR_NAME}" -g "${RESOURCE_GROUP_NAME}" | jq .primaryKey -r)
 }
 
+create_app_insights_if_not_exists() {
+    echo "Checking if app insights ${FUNCTION_APP_NAME} exists..."
+    az resource show -g "${RESOURCE_GROUP_NAME}" \
+        -n "${FUNCTION_APP_NAME}" \
+        --resource-type "Microsoft.Insights/components"
+
+    if [ $? != 0 ]; then
+        echo "Creating function app ${FUNCTION_APP_NAME}..."
+        az resource create -g "${RESOURCE_GROUP_NAME}" \
+            -n "${FUNCTION_APP_NAME}-insights" \
+            --resource-type "Microsoft.Insights/components" \
+            --location "${LOCATION}" \
+            --properties '{"Application_Type":"Web"}'
+        echo "Created function app ${FUNCTION_APP_NAME}."
+    fi
+
+    APP_INSIGHTS_KEY=$(az resource show -g "${RESOURCE_GROUP_NAME}" -n "${FUNCTION_APP_NAME}" --resource-type "Microsoft.Insights/components" | jq .properties.InstrumentationKey -r)
+}
+
 create_function_app_if_not_exists() {
-    echo "Checking if function app ${FUNCTION_APP_NAME}..."
+    echo "Checking if function app ${FUNCTION_APP_NAME} exists..."
     az functionapp show -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}"
 
     if [ $? != 0 ]; then
         echo "Creating function app ${FUNCTION_APP_NAME}..."
-        az functionapp create --consumption-plan-location "${LOCATION}" -n "${FUNCTION_APP_NAME}" --os-type Windows -g "${RESOURCE_GROUP_NAME}" --runtime dotnet --storage-account "${STORAGE_ACCOUNT_NAME}"
+        az functionapp create \
+            --consumption-plan-location "${LOCATION}" \
+            -n "${FUNCTION_APP_NAME}" \
+            --os-type Windows \
+            -g "${RESOURCE_GROUP_NAME}" \
+            --runtime dotnet \
+            --storage-account "${STORAGE_ACCOUNT_NAME}"
         echo "Created function app ${FUNCTION_APP_NAME}."
     fi
 }
@@ -73,6 +102,7 @@ update_function_app_settings() {
     az functionapp config appsettings set -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --settings "SignalR:Endpoint=${SIGNALR_ENDPOINT}"
     az functionapp config appsettings set -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --settings "SignalR:Key=${SIGNALR_KEY}"
     az functionapp config appsettings set -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --settings "WEBSITE_RUN_FROM_PACKAGE=1"
+    az functionapp config appsettings set -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --settings "APPINSIGHTS_INSTRUMENTATIONKEY=${APP_INSIGHTS_KEY}"
 
     az functionapp cors remove -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --allowed-origins "*"
     az functionapp cors add -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --allowed-origins "*"
