@@ -6,6 +6,7 @@ export RESOURCE_GROUP_NAME='realtime-app-rg'
 
 export FUNCTION_APP_NAME='realtime-app-func'
 
+export APP_INSIGHTS_NAME="${FUNCTION_APP_NAME}-insights"
 export APP_INSIGHTS_LOCATION='southcentralus'
 export APP_INSIGHTS_KEY=''
 
@@ -64,22 +65,22 @@ create_signalr_if_not_exists() {
 }
 
 create_app_insights_if_not_exists() {
-    echo "Checking if app insights ${FUNCTION_APP_NAME} exists..."
+    echo "Checking if app insights ${APP_INSIGHTS_NAME} exists..."
     az resource show -g "${RESOURCE_GROUP_NAME}" \
-        -n "${FUNCTION_APP_NAME}" \
+        -n "${APP_INSIGHTS_NAME}" \
         --resource-type "Microsoft.Insights/components"
 
     if [ $? != 0 ]; then
-        echo "Creating function app ${FUNCTION_APP_NAME}..."
+        echo "Creating app insights ${APP_INSIGHTS_NAME}..."
         az resource create -g "${RESOURCE_GROUP_NAME}" \
-            -n "${FUNCTION_APP_NAME}-insights" \
+            -n "${APP_INSIGHTS_NAME}" \
             --resource-type "Microsoft.Insights/components" \
             --location "${APP_INSIGHTS_LOCATION}" \
             --properties '{"Application_Type":"Web"}'
-        echo "Created function app ${FUNCTION_APP_NAME}."
+        echo "Created app insights ${APP_INSIGHTS_NAME}."
     fi
 
-    APP_INSIGHTS_KEY=$(az resource show -g "${RESOURCE_GROUP_NAME}" -n "${FUNCTION_APP_NAME}" --resource-type "Microsoft.Insights/components" | jq .properties.InstrumentationKey -r)
+    APP_INSIGHTS_KEY=$(az resource show -g "${RESOURCE_GROUP_NAME}" -n "${APP_INSIGHTS_NAME}" --resource-type "Microsoft.Insights/components" | jq .properties.InstrumentationKey -r)
 }
 
 create_function_app_if_not_exists() {
