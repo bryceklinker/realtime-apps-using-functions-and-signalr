@@ -18,6 +18,7 @@ main() {
     create_resource_group_if_not_exists
     create_storage_account_if_not_exists
     create_signalr_if_not_exists
+    create_app_insights_if_not_exists
     create_function_app_if_not_exists
     deploy_function_app
     update_function_app_settings
