@@ -12,6 +12,9 @@ variables:
   - name: ARCHIVED_FUNCTION_PATH
     value: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function.$(Build.BuildId).zip'
 
+  - name: FUNCTION_APP_NAME
+    value: 'realtime-app-func'
+
   - name: WEB_DIRECTORY
     value: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Web'
 
@@ -100,18 +103,19 @@ jobs:
       targetFolder: '$(WEB_ARTIFACTS_DIRECTORY)'
 
   - task: AzureCLI@1
-    displayName: Deploy Function App
+    displayName: 'Create Infrastructure'
     inputs:
       azureSubscription: 'Azure VS Pro Subscription'
       scriptLocation: 'scriptPath'
       scriptPath: './deploy-app.sh'
 
   - task: AzureRmWebAppDeployment@4
+    displayName: 'Deploy Function App'
     inputs:
       ConnectionType: 'AzureRM'
       azureSubscription: 'Azure VS Pro Subscription'
       appType: 'functionApp'
-      WebAppName: 'realtime-app-func'
+      WebAppName: '$(FUNCTION_APP_NAME)'
       packageForLinux: '$(ARCHIVED_FUNCTION_PATH)'
       enableCustomDeployment: true
       DeploymentType: 'webDeploy'

@@ -4,8 +4,6 @@ export LOCATION='centralus'
 
 export RESOURCE_GROUP_NAME='realtime-app-rg'
 
-export FUNCTION_APP_NAME='realtime-app-func'
-
 export APP_INSIGHTS_NAME="${FUNCTION_APP_NAME}-insights"
 export APP_INSIGHTS_LOCATION='southcentralus'
 export APP_INSIGHTS_KEY=''
