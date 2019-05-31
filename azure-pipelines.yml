@@ -79,8 +79,8 @@ stages:
 
   - stage: deploy
     jobs:
-    - job: Deploy App
-      displayName: CI
+    - job: deploy
+      displayName: Deploy App
       pool: 
         vmImage: 'vs2017-win2016'
       workspace:
