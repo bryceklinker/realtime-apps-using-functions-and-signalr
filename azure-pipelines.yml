@@ -91,14 +91,6 @@ stages:
       - task: NuGetToolInstaller@0
         displayName: Install NuGet
 
-      - task: NodeTool@0
-        displayName: Install Node 10
-        inputs:
-          versionSpec: '10.x'
-
-      - bash: npm install --global yarn
-        displayName: Install Yarn
-
       - task: NuGetCommand@2
         displayName: Restore NuGet Packages
         inputs:
@@ -113,22 +105,12 @@ stages:
           publishWebProjects: false
           workingDirectory: '$(FUNCTION_DIRECTORY)'
       
-      - bash: yarn build
-        displayName: Publish Website
-        workingDirectory: '$(WEB_DIRECTORY)'
-      
       - task: ArchiveFiles@2
         displayName: Package Function
         inputs:
           rootFolderOrFile: '$(FUNCTION_PUBLISH_DIRECTORY)'
           includeRootFolder: false
           archiveFile: '$(ARCHIVED_FUNCTION_PATH)'
-
-      - task: CopyFiles@2
-        displayName: Copy Website
-        inputs:
-          sourceFolder: '$(WEB_PUBLISH_DIRECTORY)'
-          targetFolder: '$(WEB_ARTIFACTS_DIRECTORY)'
 
       - task: AzureCLI@1
         displayName: 'Create Infrastructure'
