@@ -29,98 +29,108 @@ variables:
 
   - name: MOBILE_TESTS_DIRECTORY
     value: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Mobile.Tests'
-  
-jobs:
-- job: CI
-  displayName: CI
-  pool: 
-    vmImage: 'macOS-10.14'
-  workspace:
-    clean: all
-  steps:
-  - task: NuGetToolInstaller@0
-    displayName: Install NuGet
+stages:
+  - stage: Build And Test
+    jobs:
+    - job: CI
+      displayName: CI
+      pool: 
+        vmImage: 'macOS-10.14'
+      workspace:
+        clean: all
+      steps:
+      - task: NuGetToolInstaller@0
+        displayName: Install NuGet
 
-  - task: NodeTool@0
-    displayName: Install Node 10
-    inputs:
-      versionSpec: '10.x'
+      - task: NodeTool@0
+        displayName: Install Node 10
+        inputs:
+          versionSpec: '10.x'
 
-  - bash: npm install --global yarn
-    displayName: Install Yarn
+      - bash: npm install --global yarn
+        displayName: Install Yarn
 
-  - task: NuGetCommand@2
-    displayName: Restore NuGet Packages
-    inputs:
-      restoreSolution: '**/*.sln'
+      - task: NuGetCommand@2
+        displayName: Restore NuGet Packages
+        inputs:
+          restoreSolution: '**/*.sln'
 
-  - bash: yarn
-    displayName: Install Node Packages
-    workingDirectory: '$(WEB_DIRECTORY)'
+      - bash: yarn
+        displayName: Install Node Packages
+        workingDirectory: '$(WEB_DIRECTORY)'
 
-  - task: DotNetCoreCLI@2
-    displayName: Function Tests
-    inputs:
-      command: 'test'
-      configuration: '$(BUILD_CONFIGURATION)'
-      workingDirectory: '$(FUNCTION_TESTS_DIRECTORY)'
+      - task: DotNetCoreCLI@2
+        displayName: Function Tests
+        inputs:
+          command: 'test'
+          configuration: '$(BUILD_CONFIGURATION)'
+          workingDirectory: '$(FUNCTION_TESTS_DIRECTORY)'
+          
+      - task: DotNetCoreCLI@2
+        displayName: Forms Tests
+        inputs:
+          command: 'test'
+          configuration: '$(BUILD_CONFIGURATION)'
+          workingDirectory: '$(MOBILE_TESTS_DIRECTORY)'
+
+      - bash: yarn test
+        displayName: Web Tests
+        workingDirectory: '$(WEB_DIRECTORY)'
+
+  - stage: Deploy App
+    jobs:
+    - job: Deploy App
+      displayName: CI
+      pool: 
+        vmImage: 'vs2017-win2016'
+      workspace:
+        clean: all
+      steps:
+      - task: DotNetCoreCLI@2
+        displayName: Publish Function
+        inputs:
+          command: 'publish'
+          arguments: '--output $(FUNCTION_PUBLISH_DIRECTORY)'
+          configuration: '$(BUILD_CONFIGURATION)'
+          publishWebProjects: false
+          workingDirectory: '$(FUNCTION_DIRECTORY)'
       
-  - task: DotNetCoreCLI@2
-    displayName: Forms Tests
-    inputs:
-      command: 'test'
-      configuration: '$(BUILD_CONFIGURATION)'
-      workingDirectory: '$(MOBILE_TESTS_DIRECTORY)'
+      - bash: yarn build
+        displayName: Publish Website
+        workingDirectory: '$(WEB_DIRECTORY)'
+      
+      - task: ArchiveFiles@2
+        displayName: Package Function
+        inputs:
+          rootFolderOrFile: '$(FUNCTION_PUBLISH_DIRECTORY)'
+          includeRootFolder: false
+          archiveFile: '$(ARCHIVED_FUNCTION_PATH)'
 
-  - bash: yarn test
-    displayName: Web Tests
-    workingDirectory: '$(WEB_DIRECTORY)'
+      - task: CopyFiles@2
+        displayName: Copy Website
+        inputs:
+          sourceFolder: '$(WEB_PUBLISH_DIRECTORY)'
+          targetFolder: '$(WEB_ARTIFACTS_DIRECTORY)'
 
-  - task: DotNetCoreCLI@2
-    displayName: Publish Function
-    inputs:
-      command: 'publish'
-      arguments: '--output $(FUNCTION_PUBLISH_DIRECTORY)'
-      configuration: '$(BUILD_CONFIGURATION)'
-      publishWebProjects: false
-      workingDirectory: '$(FUNCTION_DIRECTORY)'
-  
-  - bash: yarn build
-    displayName: Publish Website
-    workingDirectory: '$(WEB_DIRECTORY)'
-  
-  - task: ArchiveFiles@2
-    displayName: Package Function
-    inputs:
-      rootFolderOrFile: '$(FUNCTION_PUBLISH_DIRECTORY)'
-      includeRootFolder: false
-      archiveFile: '$(ARCHIVED_FUNCTION_PATH)'
+      - task: AzureCLI@1
+        displayName: 'Create Infrastructure'
+        inputs:
+          azureSubscription: 'Azure VS Pro Subscription'
+          scriptLocation: 'scriptPath'
+          scriptPath: './deploy-app.sh'
 
-  - task: CopyFiles@2
-    displayName: Copy Website
-    inputs:
-      sourceFolder: '$(WEB_PUBLISH_DIRECTORY)'
-      targetFolder: '$(WEB_ARTIFACTS_DIRECTORY)'
+      - task: AzureRmWebAppDeployment@4
+        displayName: 'Deploy Function App'
+        inputs:
+          ConnectionType: 'AzureRM'
+          azureSubscription: 'Azure VS Pro Subscription'
+          appType: 'functionApp'
+          WebAppName: '$(FUNCTION_APP_NAME)'
+          packageForLinux: '$(ARCHIVED_FUNCTION_PATH)'
+          enableCustomDeployment: true
+          DeploymentType: 'webDeploy'
+          TakeAppOfflineFlag: true
+          RemoveAdditionalFilesFlag: true
 
-  - task: AzureCLI@1
-    displayName: 'Create Infrastructure'
-    inputs:
-      azureSubscription: 'Azure VS Pro Subscription'
-      scriptLocation: 'scriptPath'
-      scriptPath: './deploy-app.sh'
-
-  - task: AzureRmWebAppDeployment@4
-    displayName: 'Deploy Function App'
-    inputs:
-      ConnectionType: 'AzureRM'
-      azureSubscription: 'Azure VS Pro Subscription'
-      appType: 'functionApp'
-      WebAppName: '$(FUNCTION_APP_NAME)'
-      packageForLinux: '$(ARCHIVED_FUNCTION_PATH)'
-      enableCustomDeployment: true
-      DeploymentType: 'webDeploy'
-      TakeAppOfflineFlag: true
-      RemoveAdditionalFilesFlag: true
-
-  - task: PublishBuildArtifacts@1
-    displayName: Publish Artifacts
+      - task: PublishBuildArtifacts@1
+        displayName: Publish Artifacts
