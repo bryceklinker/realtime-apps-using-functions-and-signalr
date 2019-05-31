@@ -31,8 +31,9 @@ variables:
     value: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Mobile.Tests'
 stages:
   - stage: build_and_test
+    displayName: Build And Test
     jobs:
-    - job: CI
+    - job: ci
       displayName: CI
       pool: 
         vmImage: 'macOS-10.14'
@@ -78,9 +79,10 @@ stages:
         workingDirectory: '$(WEB_DIRECTORY)'
 
   - stage: deploy
+    displayName: Deploy App
     jobs:
     - job: deploy
-      displayName: Deploy App
+      displayName: Deploy
       pool: 
         vmImage: 'vs2017-win2016'
       workspace:
