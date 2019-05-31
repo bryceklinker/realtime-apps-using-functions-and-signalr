@@ -106,5 +106,17 @@ jobs:
       scriptLocation: 'scriptPath'
       scriptPath: './deploy-app.sh'
 
+  - task: AzureRmWebAppDeployment@4
+    inputs:
+      ConnectionType: 'AzureRM'
+      azureSubscription: 'Azure VS Pro Subscription'
+      appType: 'functionApp'
+      WebAppName: 'realtime-app-func'
+      packageForLinux: '$(ARCHIVED_FUNCTION_PATH)'
+      enableCustomDeployment: true
+      DeploymentType: 'webDeploy'
+      TakeAppOfflineFlag: true
+      RemoveAdditionalFilesFlag: true
+
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifacts

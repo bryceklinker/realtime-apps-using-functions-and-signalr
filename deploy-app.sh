@@ -23,7 +23,6 @@ main() {
     create_signalr_if_not_exists
     create_app_insights_if_not_exists
     create_function_app_if_not_exists
-    deploy_function_app
     update_function_app_settings
 }
 
@@ -113,13 +112,6 @@ update_function_app_settings() {
     az functionapp cors remove -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --allowed-origins "https://functions-next.azure.com"
     az functionapp cors remove -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --allowed-origins "*"
     az functionapp cors add -n "${FUNCTION_APP_NAME}" -g "${RESOURCE_GROUP_NAME}" --allowed-origins "*"
-}
-
-deploy_function_app() {
-    echo "Deploying to ${FUNCTION_APP_NAME}..."
-    az functionapp deployment source config-zip -g "${RESOURCE_GROUP_NAME}" -n "${FUNCTION_APP_NAME}" --src "${ARCHIVED_FUNCTION_PATH}"
-    az functionapp restart -g "${RESOURCE_GROUP_NAME}" -n "${FUNCTION_APP_NAME}"
-    echo "Deployed to ${FUNCTION_APP_NAME}."
 }
 
 main
