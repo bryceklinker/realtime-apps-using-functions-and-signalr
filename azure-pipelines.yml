@@ -33,8 +33,7 @@ stages:
   - stage: build_and_test
     displayName: Build And Test
     jobs:
-    - job: ci
-      displayName: CI
+    - job:
       pool: 
         vmImage: 'macOS-10.14'
       workspace:
@@ -81,8 +80,7 @@ stages:
   - stage: deploy_infrastructure
     displayName: Deploy Infrastructure
     jobs: 
-    - job: deploy_infrastructure
-      displayName: Deploy
+    - job:
       pool:
         vmImage: 'macOS-10.14'
       workspace:
@@ -94,12 +92,11 @@ stages:
           azureSubscription: 'Azure VS Pro Subscription'
           scriptLocation: 'scriptPath'
           scriptPath: './deploy-app.sh'
-          
+
   - stage: deploy_app
     displayName: Deploy App
     jobs:
-    - job: deploy
-      displayName: Deploy
+    - job:
       pool: 
         vmImage: 'vs2017-win2016'
       workspace:
@@ -129,18 +126,13 @@ stages:
           includeRootFolder: false
           archiveFile: '$(ARCHIVED_FUNCTION_PATH)'
 
-      - task: AzureRmWebAppDeployment@4
-        displayName: 'Deploy Function App'
+      - task: AzureFunctionApp@1
         inputs:
-          ConnectionType: 'AzureRM'
           azureSubscription: 'Azure VS Pro Subscription'
           appType: 'functionApp'
-          WebAppName: '$(FUNCTION_APP_NAME)'
-          packageForLinux: '$(ARCHIVED_FUNCTION_PATH)'
-          enableCustomDeployment: true
-          DeploymentType: 'webDeploy'
-          TakeAppOfflineFlag: true
-          RemoveAdditionalFilesFlag: true
+          appName: '$(FUNCTION_APP_NAME)'
+          package: '$(ARCHIVED_FUNCTION_PATH)'
+          deploymentMethod: 'runFromPackage'
 
       - task: PublishBuildArtifacts@1
         displayName: Publish Artifacts
