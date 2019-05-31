@@ -88,6 +88,22 @@ stages:
       workspace:
         clean: all
       steps:
+      - task: NuGetToolInstaller@0
+        displayName: Install NuGet
+
+      - task: NodeTool@0
+        displayName: Install Node 10
+        inputs:
+          versionSpec: '10.x'
+
+      - bash: npm install --global yarn
+        displayName: Install Yarn
+
+      - task: NuGetCommand@2
+        displayName: Restore NuGet Packages
+        inputs:
+          restoreSolution: '**/*.sln'
+
       - task: DotNetCoreCLI@2
         displayName: Publish Function
         inputs:
