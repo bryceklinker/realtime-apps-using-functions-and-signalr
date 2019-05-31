@@ -78,7 +78,24 @@ stages:
         displayName: Web Tests
         workingDirectory: '$(WEB_DIRECTORY)'
 
-  - stage: deploy
+  - stage: deploy_infrastructure
+    displayName: Deploy Infrastructure
+    jobs: 
+    - job: deploy_infrastructure
+      displayName: Deploy
+      pool:
+        vmImage: 'macOS-10.14'
+      workspace:
+        clean: all
+      steps:
+      - task: AzureCLI@1
+        displayName: 'Create Infrastructure'
+        inputs:
+          azureSubscription: 'Azure VS Pro Subscription'
+          scriptLocation: 'scriptPath'
+          scriptPath: './deploy-app.sh'
+          
+  - stage: deploy_app
     displayName: Deploy App
     jobs:
     - job: deploy
@@ -111,13 +128,6 @@ stages:
           rootFolderOrFile: '$(FUNCTION_PUBLISH_DIRECTORY)'
           includeRootFolder: false
           archiveFile: '$(ARCHIVED_FUNCTION_PATH)'
-
-      - task: AzureCLI@1
-        displayName: 'Create Infrastructure'
-        inputs:
-          azureSubscription: 'Azure VS Pro Subscription'
-          scriptLocation: 'scriptPath'
-          scriptPath: './deploy-app.sh'
 
       - task: AzureRmWebAppDeployment@4
         displayName: 'Deploy Function App'
