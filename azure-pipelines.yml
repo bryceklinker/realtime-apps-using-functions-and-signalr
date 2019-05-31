@@ -30,7 +30,7 @@ variables:
   - name: MOBILE_TESTS_DIRECTORY
     value: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Mobile.Tests'
 stages:
-  - stage: Build And Test
+  - stage: build_and_test
     jobs:
     - job: CI
       displayName: CI
@@ -77,7 +77,7 @@ stages:
         displayName: Web Tests
         workingDirectory: '$(WEB_DIRECTORY)'
 
-  - stage: Deploy App
+  - stage: deploy
     jobs:
     - job: Deploy App
       displayName: CI
