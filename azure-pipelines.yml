@@ -128,6 +128,7 @@ stages:
           archiveFile: '$(ARCHIVED_FUNCTION_PATH)'
 
       - task: AzureFunctionApp@1
+        displayName: Deploy Function App
         inputs:
           azureSubscription: 'Azure VS Pro Subscription'
           appType: 'functionApp'
