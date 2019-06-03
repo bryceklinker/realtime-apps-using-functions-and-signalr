@@ -49,15 +49,17 @@ create_storage_account_if_not_exists() {
         echo "Created storage account ${STORAGE_ACCOUNT_NAME}."
     fi
 
+    export STORAGE_ACCOUNT_CONNECTION_STRING=$(az storage account show-connection-string -g "${RESOURCE_GROUP_NAME}" -n "${STORAGE_ACCOUNT_NAME}" | jq .connectionString -r)
+
     echo "Checking if files container exists..."
     EXISTS=$(az storage container exists --account-name "${STORAGE_ACCOUNT_NAME}" --name "${STORAGE_FILES_CONTAINER}" | jq .exists -r)
     if [[ "${EXISTS}" = "false" ]]; then
         echo "Creating storage container 'files'..."
-        az storage container --account-name "${STORAGE_ACCOUNT_NAME}" --name "${STORAGE_FILES_CONTAINER}"
+        az storage container --connection-string "${STORAGE_ACCOUNT_CONNECTION_STRING}" "${STORAGE_FILES_CONTAINER}"
         echo "Created storage container 'files'."
     fi
 
-    STORAGE_ACCOUNT_CONNECTION_STRING=$(az storage account show-connection-string -g "${RESOURCE_GROUP_NAME}" -n "${STORAGE_ACCOUNT_NAME}" | jq .connectionString -r)
+    
 }
 
 create_signalr_if_not_exists() {
@@ -132,7 +134,7 @@ deploy_function_app() {
 
 upload_website_files() {
     echo "Uploading website files to ${STORAGE_FILES_CONTAINER} container..."
-    az storage blob upload-batch -d "${STORAGE_FILES_CONTAINER}" --account-name "${STORAGE_ACCOUNT_NAME}" --s "${WEB_PUBLISH_DIRECTORY}"
+    az storage blob upload-batch -d "${STORAGE_FILES_CONTAINER}" --account-name "${STORAGE_ACCOUNT_NAME}" --source "${WEB_PUBLISH_DIRECTORY}"
     echo "Uploaded website files to ${STORAGE_FILES_CONTAINER}."
 }
 
