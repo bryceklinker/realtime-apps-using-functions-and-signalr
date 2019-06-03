@@ -30,7 +30,10 @@ namespace Realtime.Presenter.Function.Files
         
         private static string GetBlobName(Uri uri)
         {
-            return uri.ParseQueryString()["file"];
+            var file = uri.ParseQueryString()["file"];
+            return string.IsNullOrWhiteSpace(file)
+                ? "index.html"
+                : file;
         }
 
         private static string GetContentType(string blobName)

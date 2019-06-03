@@ -32,6 +32,18 @@ namespace Realtime.Presenter.Function.Tests.Files
         }
 
         [Fact]
+        public async Task GivenUriWithNoFileParameterWhenGetThenReturnsIndexHtmlFromBlobStorage()
+        {
+            var blobText = Guid.NewGuid().ToString();
+            SetupFileBlob("index.html", blobText);
+            
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://something.com/api/files");
+            var result = (FileContentResult)await _controller.GetFile(request);
+            result.FileContents.Should().Equal(Encoding.UTF8.GetBytes(blobText));
+            result.ContentType.Should().Be("text/html");
+        }
+        
+        [Fact]
         public async Task GivenUrlWithJavascriptFileWhenGetThenReturnsJavascriptFileFromBlobStorage()
         {
             var blobText = Guid.NewGuid().ToString();
