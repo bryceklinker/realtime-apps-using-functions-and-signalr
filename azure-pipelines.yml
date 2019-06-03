@@ -97,11 +97,11 @@ stages:
           archiveFile: '$(ARCHIVED_FUNCTION_PATH)'
       
       - task: AzureCLI@1
-          displayName: 'Create Infrastructure'
-          inputs:
-            azureSubscription: 'Azure VS Pro Subscription'
-            scriptLocation: 'scriptPath'
-            scriptPath: './deploy-app.sh'
+        displayName: 'Create Infrastructure'
+        inputs:
+          azureSubscription: 'Azure VS Pro Subscription'
+          scriptLocation: 'scriptPath'
+          scriptPath: './deploy-app.sh'
       
       - task: PublishBuildArtifacts@1
-          displayName: Publish Artifacts
+        displayName: Publish Artifacts
