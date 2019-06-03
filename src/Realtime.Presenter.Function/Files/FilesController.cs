@@ -25,6 +25,9 @@ namespace Realtime.Presenter.Function.Files
             var contentType = GetContentType(blobName);
             var reader = _blobReaderFactory.GetReader(contentType);
             var bytes = await reader.Read(blobName);
+            if (bytes == null)
+                return new NotFoundResult();
+            
             return new FileContentResult(bytes, contentType);
         }
         

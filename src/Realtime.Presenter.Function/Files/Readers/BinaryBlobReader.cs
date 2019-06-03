@@ -16,6 +16,9 @@ namespace Realtime.Presenter.Function.Files.Readers
         public async Task<byte[]> Read(string blobName)
         {
             var blob = _filesStorageService.GetBlob(blobName);
+            if (!await blob.ExistsAsync())
+                return null;
+            
             using (var memoryStream = new MemoryStream())
             {
                 await blob.DownloadToStreamAsync(memoryStream);

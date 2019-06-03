@@ -19,12 +19,9 @@ namespace Realtime.Presenter.Function.Files.Readers
 
         public IBlobReader GetReader(string contentType)
         {
-            if (contentType.StartsWith("text"))
-            {
-                return _serviceProvider.GetRequiredService<TextBlobReader>();
-            }
-
-            return _serviceProvider.GetRequiredService<BinaryBlobReader>();
+            return contentType.StartsWith("text")
+                ? (IBlobReader) _serviceProvider.GetRequiredService<TextBlobReader>()
+                : _serviceProvider.GetRequiredService<BinaryBlobReader>();
         }
     }
 }

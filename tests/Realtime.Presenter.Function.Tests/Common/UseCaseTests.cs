@@ -42,6 +42,13 @@ namespace Realtime.Presenter.Function.Tests.Common
             Config = configurationFactory.Create();
 
             _filesContainerMock = new Mock<CloudBlobContainer>(new Uri("https://something.com/files"));
+            _filesContainerMock.Setup(s => s.GetBlockBlobReference(It.IsAny<string>()))
+                .Returns(() =>
+                {
+                    var mock = CreateMockCloudBlockBlob("idk");
+                    mock.Setup(s => s.ExistsAsync()).ReturnsAsync(false);
+                    return mock.Object;
+                });
             _blobClientMock = new Mock<CloudBlobClient>(new Uri("https://something.com"));
             _blobClientMock.Setup(s => s.GetContainerReference("files")).Returns(_filesContainerMock.Object);
 
@@ -78,7 +85,7 @@ namespace Realtime.Presenter.Function.Tests.Common
 
         protected void SetupFileBlob(string blob, string contents)
         {
-            var blockBlob = new Mock<CloudBlockBlob>(new Uri($"https://something.com/files/{blob}"));
+            var blockBlob = CreateMockCloudBlockBlob(blob);
             blockBlob.Setup(s => s.DownloadTextAsync())
                 .ReturnsAsync(contents);
             
@@ -88,13 +95,21 @@ namespace Realtime.Presenter.Function.Tests.Common
 
         protected void SetupFileBlob(string blob, byte[] bytes)
         {
-            var blockBlob = new Mock<CloudBlockBlob>(new Uri($"https://something.com/files/{blob}"));
+            var blockBlob = CreateMockCloudBlockBlob(blob);
             blockBlob.Setup(s => s.DownloadToStreamAsync(It.IsAny<Stream>()))
                 .Callback<Stream>(s => s.Write(bytes))
                 .Returns(Task.CompletedTask);
 
             _filesContainerMock.Setup(s => s.GetBlockBlobReference(blob))
                 .Returns(blockBlob.Object);
+        }
+
+        private static Mock<CloudBlockBlob> CreateMockCloudBlockBlob(string blob)
+        { 
+            var blockBlob = new Mock<CloudBlockBlob>(new Uri($"https://something.com/files/{blob}"));
+            blockBlob.Setup(s => s.ExistsAsync())
+                .ReturnsAsync(true);
+            return blockBlob;
         }
     }
 }
