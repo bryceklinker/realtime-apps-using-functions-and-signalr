@@ -50,7 +50,7 @@ create_storage_account_if_not_exists() {
     fi
 
     echo "Checking if files container exists..."
-    EXISTS=$(az storage container exists --account-name "${STORAGE_ACCOUNT_NAME}" --name "${STORAGE_FILES_CONTAINER}")
+    EXISTS=$(az storage container exists --account-name "${STORAGE_ACCOUNT_NAME}" --name "${STORAGE_FILES_CONTAINER}" | jq .exists -r)
     if [[ "${EXISTS}" = "false" ]]; then
         echo "Creating storage container 'files'..."
         az storage container --account-name "${STORAGE_ACCOUNT_NAME}" --name "${STORAGE_FILES_CONTAINER}"
@@ -126,13 +126,13 @@ update_function_app_settings() {
 
 deploy_function_app() {
     echo "Deploying function app ${FUNCTION_APP_NAME}..."
-    az functionapp deployment source config-zip -g "${RESOURCE_GROUP_NAME}" -n "${FUNCTION_APP_NAME}" --source "${ARCHIVED_FUNCTION_PATH}"
+    az functionapp deployment source config-zip -g "${RESOURCE_GROUP_NAME}" -n "${FUNCTION_APP_NAME}" --src "${ARCHIVED_FUNCTION_PATH}"
     echo "Deployed function app ${FUNCTION_APP_NAME}."
 }
 
 upload_website_files() {
     echo "Uploading website files to ${STORAGE_FILES_CONTAINER} container..."
-    az storage blob upload-batch -d "${STORAGE_FILES_CONTAINER}" --account-name "${STORAGE_ACCOUNT_NAME}" -s "${WEB_PUBLISH_DIRECTORY}"
+    az storage blob upload-batch -d "${STORAGE_FILES_CONTAINER}" --account-name "${STORAGE_ACCOUNT_NAME}" --s "${WEB_PUBLISH_DIRECTORY}"
     echo "Uploaded website files to ${STORAGE_FILES_CONTAINER}."
 }
 

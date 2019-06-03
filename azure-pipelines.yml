@@ -97,7 +97,7 @@ stages:
           archiveFile: '$(ARCHIVED_FUNCTION_PATH)'
       
       - task: AzureCLI@1
-        displayName: 'Create Infrastructure'
+        displayName: 'Deploy Application'
         inputs:
           azureSubscription: 'Azure VS Pro Subscription'
           scriptLocation: 'scriptPath'
