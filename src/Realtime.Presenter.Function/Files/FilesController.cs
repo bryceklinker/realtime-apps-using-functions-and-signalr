@@ -19,7 +19,7 @@ namespace Realtime.Presenter.Function.Files
 
         [FunctionName("GetFile")]
         public async Task<IActionResult> GetFile(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "files/{*file}")] HttpRequestMessage request)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "files")] HttpRequestMessage request)
         {
             var blobName = GetBlobName(request.RequestUri);
             var contentType = GetContentType(blobName);
@@ -30,8 +30,7 @@ namespace Realtime.Presenter.Function.Files
         
         private static string GetBlobName(Uri uri)
         {
-            var parts = uri.ToString().Split("files");
-            return parts[1].Substring(1);
+            return uri.ParseQueryString()["file"];
         }
 
         private static string GetContentType(string blobName)

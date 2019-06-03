@@ -58,8 +58,6 @@ create_storage_account_if_not_exists() {
         az storage container create --connection-string "${STORAGE_ACCOUNT_CONNECTION_STRING}" --name "${STORAGE_FILES_CONTAINER}"
         echo "Created storage container 'files'."
     fi
-
-    
 }
 
 create_signalr_if_not_exists() {

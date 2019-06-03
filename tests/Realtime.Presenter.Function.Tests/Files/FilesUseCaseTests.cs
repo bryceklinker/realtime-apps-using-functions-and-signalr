@@ -25,7 +25,7 @@ namespace Realtime.Presenter.Function.Tests.Files
             var blobText = Guid.NewGuid().ToString();
             SetupFileBlob("index.html", blobText);
             
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://something.com/api/files/index.html");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://something.com/api/files?file=index.html");
             var result = (FileContentResult)await _controller.GetFile(request);
             result.FileContents.Should().Equal(Encoding.UTF8.GetBytes(blobText));
             result.ContentType.Should().Be("text/html");
@@ -37,7 +37,7 @@ namespace Realtime.Presenter.Function.Tests.Files
             var blobText = Guid.NewGuid().ToString();
             SetupFileBlob("main.js", blobText);
             
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://something.com/api/files/main.js");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://something.com/api/files?file=main.js");
             var result = (FileContentResult)await _controller.GetFile(request);
             result.FileContents.Should().Equal(Encoding.UTF8.GetBytes(blobText));
             result.ContentType.Should().Be("text/javascript");
@@ -49,7 +49,7 @@ namespace Realtime.Presenter.Function.Tests.Files
             var blobContents = Guid.NewGuid().ToByteArray();
             SetupFileBlob("something.png", blobContents);
             
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://something.com/api/files/something.png");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://something.com/api/files?file=something.png");
             var result = (FileContentResult)await _controller.GetFile(request);
             result.FileContents.Should().Equal(blobContents);
             result.ContentType.Should().Be("image/png");
