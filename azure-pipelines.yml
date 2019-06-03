@@ -12,9 +12,6 @@ variables:
   - name: ARCHIVED_FUNCTION_PATH
     value: '$(Build.ArtifactStagingDirectory)/Realtime.Presenter.Function.$(Build.BuildId).zip'
 
-  - name: FUNCTION_APP_NAME
-    value: 'realtime-app-func'
-
   - name: WEB_DIRECTORY
     value: '$(Build.SourcesDirectory)/src/Realtime.Presenter.Web'
 
@@ -29,6 +26,7 @@ variables:
 
   - name: MOBILE_TESTS_DIRECTORY
     value: '$(Build.SourcesDirectory)/tests/Realtime.Presenter.Mobile.Tests'
+    
 stages:
   - stage: build_and_test
     displayName: Build And Test
@@ -77,64 +75,33 @@ stages:
         displayName: Web Tests
         workingDirectory: '$(WEB_DIRECTORY)'
 
-  - stage: deploy_infrastructure
-    displayName: Deploy Infrastructure
-    jobs: 
-    - job:
-      pool:
-        vmImage: 'macOS-10.14'
-      workspace:
-        clean: all
-      steps:
-      - task: AzureCLI@1
-        displayName: 'Create Infrastructure'
-        inputs:
-          azureSubscription: 'Azure VS Pro Subscription'
-          scriptLocation: 'scriptPath'
-          scriptPath: './deploy-app.sh'
-
-  - stage: deploy_app
-    displayName: Deploy App
-    jobs:
-    - job:
-      pool: 
-        vmImage: 'vs2017-win2016'
-      workspace:
-        clean: all
-      steps:
-      - task: NuGetToolInstaller@0
-        displayName: Install NuGet
-
-      - task: NuGetCommand@2
-        displayName: Restore NuGet Packages
-        inputs:
-          restoreSolution: '**/*.sln'
-
       - task: DotNetCoreCLI@2
-        displayName: Publish Function
-        inputs:
-          command: 'publish'
-          arguments: '--output $(FUNCTION_PUBLISH_DIRECTORY)'
-          configuration: '$(BUILD_CONFIGURATION)'
-          publishWebProjects: false
-          zipAfterPublish: false
-          workingDirectory: '$(FUNCTION_DIRECTORY)'
-      
+          displayName: Publish Function
+          inputs:
+            command: 'publish'
+            arguments: '--output $(FUNCTION_PUBLISH_DIRECTORY)'
+            configuration: '$(BUILD_CONFIGURATION)'
+            publishWebProjects: false
+            zipAfterPublish: false
+            workingDirectory: '$(FUNCTION_DIRECTORY)'
+
+      - bash: yarn build
+        displayName: Build Website
+        workingDirectory: '$(WEB_DIRECTORY)'
+
       - task: ArchiveFiles@2
         displayName: Package Function
         inputs:
           rootFolderOrFile: '$(FUNCTION_PUBLISH_DIRECTORY)'
           includeRootFolder: false
           archiveFile: '$(ARCHIVED_FUNCTION_PATH)'
-
-      - task: AzureFunctionApp@1
-        displayName: Deploy Function App
-        inputs:
-          azureSubscription: 'Azure VS Pro Subscription'
-          appType: 'functionApp'
-          appName: '$(FUNCTION_APP_NAME)'
-          package: '$(ARCHIVED_FUNCTION_PATH)'
-          deploymentMethod: 'runFromPackage'
-
+      
+      - task: AzureCLI@1
+          displayName: 'Create Infrastructure'
+          inputs:
+            azureSubscription: 'Azure VS Pro Subscription'
+            scriptLocation: 'scriptPath'
+            scriptPath: './deploy-app.sh'
+      
       - task: PublishBuildArtifacts@1
-        displayName: Publish Artifacts
+          displayName: Publish Artifacts

@@ -31,6 +31,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{2E6011F0-A761-4046-8FC7-1B92FEF356B4}"
 ProjectSection(SolutionItems) = preProject
 	azure-pipelines.yml = azure-pipelines.yml
+	deploy-app.sh = deploy-app.sh
 EndProjectSection
 EndProject
 Global
