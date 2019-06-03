@@ -78,6 +78,18 @@ namespace Realtime.Presenter.Function.Tests.Files
             result.FileContents.Should().Equal(blobContents);
             result.ContentType.Should().Be("image/png");
         }
+        
+        [Fact]
+        public async Task GivenUrlWithJpgFileWhenGetThenReturnsPngFileFromBlobStorage()
+        {
+            var blobContents = Guid.NewGuid().ToByteArray();
+            SetupFileBlob("something.jpeg", blobContents);
+            
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://something.com/api/files?file=something.jpeg");
+            var result = (FileContentResult)await _controller.GetFile(request);
+            result.FileContents.Should().Equal(blobContents);
+            result.ContentType.Should().Be("image/jpeg");
+        }
 
         [Fact]
         public async Task GivenPngImageFileThatDoesNotExistInBlobStorageWhenGetThenReturnsNotFound()

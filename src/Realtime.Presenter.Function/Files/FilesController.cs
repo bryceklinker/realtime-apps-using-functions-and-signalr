@@ -52,7 +52,10 @@ namespace Realtime.Presenter.Function.Files
 
             if (blobName.EndsWith(".svg"))
                 return "image/svg+xml";
-            
+
+            if (blobName.EndsWith(".jpeg"))
+                return "image/jpeg";
+
             return "idk";
         }
     }
