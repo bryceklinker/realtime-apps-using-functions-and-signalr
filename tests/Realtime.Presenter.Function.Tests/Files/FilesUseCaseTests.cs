@@ -56,6 +56,18 @@ namespace Realtime.Presenter.Function.Tests.Files
         }
 
         [Fact]
+        public async Task GivenSvgImageFileWhenGetThenReturnsSvgFileFromBlobStorage()
+        {
+            var blobContents = Guid.NewGuid().ToByteArray();
+            SetupFileBlob("something.svg", blobContents);
+            
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://something.com/api/files?file=something.svg");
+            var result = (FileContentResult)await _controller.GetFile(request);
+            result.FileContents.Should().Equal(blobContents);
+            result.ContentType.Should().Be("image/svg+xml");
+        }
+
+        [Fact]
         public async Task GivenUrlWithPngFileWhenGetThenReturnsPngFileFromBlobStorage()
         {
             var blobContents = Guid.NewGuid().ToByteArray();
@@ -68,7 +80,7 @@ namespace Realtime.Presenter.Function.Tests.Files
         }
 
         [Fact]
-        public async Task GivenImageFileThatDoesNotExistInBlobStorageWhenGetThenReturnsNotFound()
+        public async Task GivenPngImageFileThatDoesNotExistInBlobStorageWhenGetThenReturnsNotFound()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, "https://something.com/api/files?file=something.png");
             var result = await _controller.GetFile(request);
