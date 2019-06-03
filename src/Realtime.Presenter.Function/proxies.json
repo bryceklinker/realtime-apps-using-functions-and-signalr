@@ -2,7 +2,8 @@
   "proxies": {
     "files": {
       "matchCondition": {
-        "route": "{*path:regex(^\\/(?!api\\/).*)}"
+        "methods": ["GET"],
+        "route": "frontend/{*path}"
       },
       "backendUri": "https://%WEBSITE_SITE_NAME%.azurewebsites.net/api/files?file={path}"
     }
