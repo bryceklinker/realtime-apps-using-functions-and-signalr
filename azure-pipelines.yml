@@ -76,14 +76,14 @@ stages:
         workingDirectory: '$(WEB_DIRECTORY)'
 
       - task: DotNetCoreCLI@2
-          displayName: Publish Function
-          inputs:
-            command: 'publish'
-            arguments: '--output $(FUNCTION_PUBLISH_DIRECTORY)'
-            configuration: '$(BUILD_CONFIGURATION)'
-            publishWebProjects: false
-            zipAfterPublish: false
-            workingDirectory: '$(FUNCTION_DIRECTORY)'
+        displayName: Publish Function
+        inputs:
+          command: 'publish'
+          arguments: '--output $(FUNCTION_PUBLISH_DIRECTORY)'
+          configuration: '$(BUILD_CONFIGURATION)'
+          publishWebProjects: false
+          zipAfterPublish: false
+          workingDirectory: '$(FUNCTION_DIRECTORY)'
 
       - bash: yarn build
         displayName: Build Website
