@@ -4,7 +4,7 @@ import {closeSettings, openSettings, settingsUpdated} from "../actions";
 describe('settingsReducer', () => {
    it('should have url for azure function', () => {
        const state = settingsReducer();
-       expect(state.settings.baseUrl).toEqual('https://realtime-apps-presentation-func.azurewebsites.net');
+       expect(state.settings.baseUrl).toEqual('http://localhost:7071');
        expect(state.isOpen).toEqual(false);
    });
 

@@ -1,0 +1,1 @@
+declare const FUNCTION_URL: string;
