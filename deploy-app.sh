@@ -55,7 +55,7 @@ create_storage_account_if_not_exists() {
     EXISTS=$(az storage container exists --account-name "${STORAGE_ACCOUNT_NAME}" --name "${STORAGE_FILES_CONTAINER}" | jq .exists -r)
     if [[ "${EXISTS}" = "false" ]]; then
         echo "Creating storage container 'files'..."
-        az storage container --connection-string "${STORAGE_ACCOUNT_CONNECTION_STRING}" "${STORAGE_FILES_CONTAINER}"
+        az storage container create --connection-string "${STORAGE_ACCOUNT_CONNECTION_STRING}" "${STORAGE_FILES_CONTAINER}"
         echo "Created storage container 'files'."
     fi
 
