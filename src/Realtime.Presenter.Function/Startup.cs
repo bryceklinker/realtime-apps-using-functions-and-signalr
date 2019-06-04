@@ -1,4 +1,4 @@
-using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.Configuration;
 using Realtime.Presenter.Function;
@@ -7,14 +7,13 @@ using Realtime.Presenter.Function;
 
 namespace Realtime.Presenter.Function
 {
-    public class Startup : IWebJobsStartup
+    public class Startup : FunctionsStartup
     {
-        public void Configure(IWebJobsBuilder builder)
+        public override void Configure(IFunctionsHostBuilder builder)
         {
             var config = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
                 .Build();
-
             builder.Services.AddRealTimePresenter(config);
         }
     }
