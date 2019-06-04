@@ -16,6 +16,7 @@ import {QuestionsSlide} from "../components/slides/QuestionsSlide";
 import {FeedbackSlide } from '../components/slides/FeedbackSlide';
 import {CodeSlide} from "../components/slides/CodeSlide";
 import {WhatAreRealtimeApplicationsSlide} from "../components/slides/WhatAreRealtimeApplicationsSlide";
+import {RealtimeApplicationExamplesSlide} from "../components/slides/RealtimeApplicationExamplesSlide";
 
 export interface SlidesState {
     currentSlideIndex: number;
@@ -28,6 +29,7 @@ const initialState: SlidesState = {
         OpeningSlide,
         AgendaSlide,
         WhatAreRealtimeApplicationsSlide,
+        RealtimeApplicationExamplesSlide,
         WhyShouldYouCareSlide,
         WhatIsAzureFunctionsSlide,
         AzureFunctionsV1VsV2Slide,
