@@ -4,6 +4,8 @@ import {SlideTitle} from "./common/SlideTitle";
 import {BulletList} from "./common/BulletList";
 import {BulletListItem} from "./common/BulletListItem";
 
+const improvements = require('../../../../assets/improvements.png');
+
 interface Props extends WithStyles<typeof styles> {
 
 }
@@ -32,7 +34,7 @@ function AzureFunctionsV1VsV2Component({classes}: Props) {
                     </BulletList>
                 </div>
                 <div>
-
+                    <img className={classes.image} src={improvements} />
                 </div>
             </div>
         </div>
@@ -45,6 +47,9 @@ const styles = createStyles({
     },
     content: {
         gridTemplateColumns: '50% 50%'
+    },
+    image: {
+        width: '100%'
     }
 });
 

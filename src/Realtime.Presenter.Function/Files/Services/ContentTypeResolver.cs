@@ -23,6 +23,9 @@ namespace Realtime.Presenter.Function.Files.Services
 
             if (blobName.EndsWith(".jpeg"))
                 return "image/jpeg";
+            
+            if (blobName.EndsWith(".gif"))
+                return "image/gif";
 
             return "idk";
         }

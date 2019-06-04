@@ -10,6 +10,7 @@ import {AzureFunctionsV1VsV2Slide} from "../components/slides/AzureFunctionsV1Vs
 import {ReferencesSlide} from "../components/slides/ReferencesSlide";
 import {WhatIsAzureSignalRSlide} from "../components/slides/WhatIsAzureSignalRSlide";
 import {WhyShouldYouCareSlide} from "../components/slides/WhyShouldYouCareSlide";
+import {ThankYouSlide} from "../components/slides/ThankYouSlide";
 
 export interface SlidesState {
     currentSlideIndex: number;
@@ -25,6 +26,7 @@ const initialState: SlidesState = {
         WhatIsAzureFunctionsSlide,
         AzureFunctionsV1VsV2Slide,
         WhatIsAzureSignalRSlide,
+        ThankYouSlide,
         ReferencesSlide
     ]
 };

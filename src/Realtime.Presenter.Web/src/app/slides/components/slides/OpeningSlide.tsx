@@ -19,7 +19,7 @@ function OpeningSlideComponent({ classes }: Props) {
             </div>
             <div className={classes.bottom}>
                 <Typography variant={'h3'}>
-                    Thanks to Industry X.O for hosting.
+                    Presentation is at: https://bit.ly/2Kk5TXI
                 </Typography>
             </div>
         </div>
@@ -28,13 +28,13 @@ function OpeningSlideComponent({ classes }: Props) {
 
 const styles = createStyles({
     root: {
-        gridTemplateRows: 'auto auto auto'
+        gridTemplateRows: 'auto auto auto auto'
     },
     bottom: {
         alignContent: 'end'
     },
     images: {
-        gridTemplateColumns: 'auto auto'
+        gridTemplateColumns: '50% 50%'
     }
 });
 

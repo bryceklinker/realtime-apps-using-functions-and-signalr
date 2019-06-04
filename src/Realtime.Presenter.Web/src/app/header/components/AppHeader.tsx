@@ -43,6 +43,9 @@ const styles = createStyles({
     },
     title: {
         margin: 0,
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden'
     }
 });
 

@@ -80,7 +80,7 @@ namespace Realtime.Presenter.Function.Tests.Files
         }
         
         [Fact]
-        public async Task GivenUrlWithJpgFileWhenGetThenReturnsPngFileFromBlobStorage()
+        public async Task GivenUrlWithJpegFileWhenGetThenReturnsJpegFileFromBlobStorage()
         {
             var blobContents = Guid.NewGuid().ToByteArray();
             SetupFileBlob("something.jpeg", blobContents);
@@ -89,6 +89,18 @@ namespace Realtime.Presenter.Function.Tests.Files
             var result = (FileContentResult)await _controller.GetFile(request);
             result.FileContents.Should().Equal(blobContents);
             result.ContentType.Should().Be("image/jpeg");
+        }
+        
+        [Fact]
+        public async Task GivenUrlWithGifFileWhenGetThenReturnsGifFileFromBlobStorage()
+        {
+            var blobContents = Guid.NewGuid().ToByteArray();
+            SetupFileBlob("something.gif", blobContents);
+            
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://something.com/api/files?file=something.gif");
+            var result = (FileContentResult)await _controller.GetFile(request);
+            result.FileContents.Should().Equal(blobContents);
+            result.ContentType.Should().Be("image/gif");
         }
 
         [Fact]
