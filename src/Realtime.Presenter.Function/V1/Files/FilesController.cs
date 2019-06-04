@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Extensions.Logging;
 using Realtime.Presenter.Function.Files.Services;
 using Realtime.Presenter.Function.V1.Common;
 
@@ -14,7 +15,8 @@ namespace Realtime.Presenter.Function.V1.Files
         [FunctionName("V1GetFile")]
         public static async Task<HttpResponseMessage> GetFile(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/files")]
-            HttpRequestMessage request)
+            HttpRequestMessage request,
+            ILogger logger)
         {
             var filesService = ServiceFactory.GetService<IFilesService>();
             var contentType = filesService.GetContentTypeForUri(request.RequestUri);

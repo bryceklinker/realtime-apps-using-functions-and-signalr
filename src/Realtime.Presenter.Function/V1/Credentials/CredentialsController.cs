@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Text;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Realtime.Presenter.Function.Common.SignalR;
 using Realtime.Presenter.Function.V1.Common;
@@ -14,7 +15,8 @@ namespace Realtime.Presenter.Function.V1.Credentials
         [FunctionName("V1GetCredentials")]
         public static HttpResponseMessage GetCredentials(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/credentials")]
-            HttpRequestMessage request)
+            HttpRequestMessage request,
+            ILogger logger)
         {
             var credentials = ServiceFactory.GetService<ISignalRService>().GenerateClientCredentials();
             return new HttpResponseMessage(HttpStatusCode.OK)
