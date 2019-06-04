@@ -6,7 +6,6 @@ import {BulletListItem} from "./common/BulletListItem";
 import {slideWithTitleStyle} from "./common/slide-style";
 
 const functionsImage = require('../../../../assets/azure-functions.png');
-const buzzwordImage = require('../../../../assets/buzzwordmeter.png');
 
 interface Props extends WithStyles<typeof styles> {
 
@@ -33,7 +32,6 @@ function WhatIsAzureFunctionsSlideComponent({classes}: Props) {
               </div>
               <div className={classes.images}>
                 <img src={functionsImage} className={classes.image}/>
-                <img src={buzzwordImage} className={classes.image} />
               </div>
           </div>
       </div>

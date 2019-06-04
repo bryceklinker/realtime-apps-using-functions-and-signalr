@@ -34,7 +34,7 @@ function AzureFunctionsV1VsV2Component({classes}: Props) {
                         </BulletListItem>
                     </BulletList>
                 </div>
-                <div>
+                <div className={classes.images}>
                     <img className={classes.image} src={improvements} />
                 </div>
             </div>
@@ -44,6 +44,9 @@ function AzureFunctionsV1VsV2Component({classes}: Props) {
 
 const styles = createStyles({
     ...slideWithTitleStyle,
+    images: {
+        alignItems: 'center'
+    },
     image: {
         width: '100%'
     }

@@ -15,6 +15,7 @@ import {AzureSignalRServiceOptions} from "../components/slides/AzureSignalRServi
 import {QuestionsSlide} from "../components/slides/QuestionsSlide";
 import {FeedbackSlide } from '../components/slides/FeedbackSlide';
 import {CodeSlide} from "../components/slides/CodeSlide";
+import {WhatAreRealtimeApplicationsSlide} from "../components/slides/WhatAreRealtimeApplicationsSlide";
 
 export interface SlidesState {
     currentSlideIndex: number;
@@ -26,6 +27,7 @@ const initialState: SlidesState = {
     slides: [
         OpeningSlide,
         AgendaSlide,
+        WhatAreRealtimeApplicationsSlide,
         WhyShouldYouCareSlide,
         WhatIsAzureFunctionsSlide,
         AzureFunctionsV1VsV2Slide,

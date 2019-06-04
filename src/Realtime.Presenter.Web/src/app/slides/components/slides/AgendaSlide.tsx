@@ -14,6 +14,7 @@ function AgendaSlideComponent({classes}: Props) {
             <SlideTitle title={'Agenda'}/>
             <div className={classes.list}>
                 <BulletList>
+                    <BulletListItem text={'Definition'} />
                     <BulletListItem text={'Why should you care?'}/>
                     <BulletListItem text={'What is Azure Functions?'}/>
                     <BulletListItem text={'What is Azure SignalR?'}/>
