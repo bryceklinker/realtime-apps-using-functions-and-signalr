@@ -3,6 +3,7 @@ import {withStyles, WithStyles, createStyles} from '@material-ui/core';
 import {SlideTitle} from "./common/SlideTitle";
 import {BulletList} from "./common/BulletList";
 import {BulletListItem} from "./common/BulletListItem";
+import {slideWithTitleStyle} from "./common/slide-style";
 
 const whyImage = require('../../../../assets/why.jpeg');
 
@@ -32,12 +33,7 @@ function WhyShouldYouCareSlideComponent({classes}: Props) {
 }
 
 const styles = createStyles({
-    root: {
-        gridTemplateRows: '48px auto'
-    },
-    content: {
-        gridTemplateColumns: '50% 50%'
-    },
+    ...slideWithTitleStyle,
     image: {
         height: '95%',
         width: '95%'

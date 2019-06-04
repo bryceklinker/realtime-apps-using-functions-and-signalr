@@ -3,6 +3,7 @@ import {withStyles, WithStyles, createStyles, Typography} from "@material-ui/cor
 import {SlideTitle} from "./common/SlideTitle";
 import {BulletList} from "./common/BulletList";
 import {BulletListItem} from "./common/BulletListItem";
+import {slideWithTitleStyle} from "./common/slide-style";
 
 const improvements = require('../../../../assets/improvements.png');
 
@@ -42,12 +43,7 @@ function AzureFunctionsV1VsV2Component({classes}: Props) {
 }
 
 const styles = createStyles({
-    root: {
-        gridTemplateRows: '48px auto'
-    },
-    content: {
-        gridTemplateColumns: '50% 50%'
-    },
+    ...slideWithTitleStyle,
     image: {
         width: '100%'
     }

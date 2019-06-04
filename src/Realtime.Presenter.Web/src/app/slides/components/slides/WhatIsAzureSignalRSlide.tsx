@@ -3,6 +3,7 @@ import {withStyles, WithStyles, createStyles} from '@material-ui/core';
 import {SlideTitle} from "./common/SlideTitle";
 import {BulletList} from "./common/BulletList";
 import {BulletListItem} from "./common/BulletListItem";
+import {slideWithTitleStyle} from "./common/slide-style";
 
 const signalRImage = require('../../../../assets/azure-signalr.svg');
 
@@ -22,7 +23,7 @@ function WhatIsAzureSignalRSlideComponent({classes}: Props) {
                         <BulletListItem text={'Recently support for ASP.NET SignalR has been added'}/>
                     </BulletList>
                 </div>
-                <div>
+                <div className={classes.images}>
                     <img src={signalRImage} className={classes.image} />
                 </div>
             </div>
@@ -31,11 +32,10 @@ function WhatIsAzureSignalRSlideComponent({classes}: Props) {
 }
 
 const styles = createStyles({
-    root: {
-        gridTemplateRows: '48px auto'
-    },
-    content: {
-        gridTemplateColumns: '50% 50%'
+    ...slideWithTitleStyle,
+    images: {
+      justifyItems: 'center',
+      alignItems: 'center',
     },
     image: {
         maxHeight: '50%',

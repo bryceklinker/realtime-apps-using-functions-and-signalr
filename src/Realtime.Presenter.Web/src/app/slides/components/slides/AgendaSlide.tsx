@@ -8,22 +8,22 @@ interface Props extends WithStyles<typeof styles> {
 
 }
 
-function AgendaSlideComponent({ classes }: Props) {
+function AgendaSlideComponent({classes}: Props) {
     return (
-      <div className={classes.root}>
-          <SlideTitle title={'Agenda'}/>
-        <div className={classes.list}>
-            <BulletList>
-                <BulletListItem text={'Why should you care?'} />
-                <BulletListItem text={'What is Azure Functions?'} />
-                <BulletListItem text={'Azure Functions v1 vs v2'} />
-                <BulletListItem text={'What is Azure SignalR?'} />
-                <BulletListItem text={'Code'} />
-                <BulletListItem text={'Questions?'} />
-                <BulletListItem text={'Thank you'} />
-            </BulletList>
+        <div className={classes.root}>
+            <SlideTitle title={'Agenda'}/>
+            <div className={classes.list}>
+                <BulletList>
+                    <BulletListItem text={'Why should you care?'}/>
+                    <BulletListItem text={'What is Azure Functions?'}/>
+                    <BulletListItem text={'What is Azure SignalR?'}/>
+                    <BulletListItem text={'Code'}/>
+                    <BulletListItem text={'Questions'}/>
+                    <BulletListItem text={'Feedback'}/>
+                    <BulletListItem text={'Thank you'}/>
+                </BulletList>
+            </div>
         </div>
-      </div>
     );
 }
 
@@ -31,12 +31,8 @@ const styles = createStyles({
     root: {
         gridTemplateRows: '48px auto auto'
     },
-    title: {
-
-    },
-    list: {
-
-    }
+    title: {},
+    list: {}
 });
 
 export const AgendaSlide = withStyles(styles)(AgendaSlideComponent);

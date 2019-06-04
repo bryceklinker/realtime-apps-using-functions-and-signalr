@@ -14,8 +14,8 @@ function OpeningSlideComponent({ classes }: Props) {
         <div className={classes.root}>
             <SlideTitle title={'Welcome to .NET@Noon'} />
             <div className={classes.images}>
-                <div><img src={functionsImage} width={'50%'}/></div>
-                <div><img src={signalrImage} width={'50%'}/></div>
+                <div><img className={classes.image} src={functionsImage} width={'50%'}/></div>
+                <div><img className={classes.image} src={signalrImage} width={'50%'}/></div>
             </div>
             <div className={classes.bottom}>
                 <Typography variant={'h3'}>
@@ -28,13 +28,17 @@ function OpeningSlideComponent({ classes }: Props) {
 
 const styles = createStyles({
     root: {
-        gridTemplateRows: 'auto auto auto auto'
+        gridTemplateRows: '48px auto auto auto'
     },
     bottom: {
         alignContent: 'end'
     },
     images: {
+        alignItems: 'center',
         gridTemplateColumns: '50% 50%'
+    },
+    image: {
+        justifySelf: 'center'
     }
 });
 

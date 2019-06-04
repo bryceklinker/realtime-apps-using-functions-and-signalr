@@ -7,14 +7,16 @@ interface Props extends WithStyles<typeof styles> {
 
 function SlideTitleComponent({classes, title}: Props) {
     return (
-        <div>
+        <div className={classes.container}>
             <Typography variant={'h3'}>{title}</Typography>
         </div>
     );
 }
 
 const styles = createStyles({
-
+    container: {
+        justifyContent: 'center',
+    }
 });
 
 export const SlideTitle = withStyles(styles)(SlideTitleComponent);

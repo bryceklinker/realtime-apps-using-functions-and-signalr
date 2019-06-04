@@ -3,6 +3,7 @@ import {createStyles, withStyles, WithStyles} from "@material-ui/core";
 import {SlideTitle} from "./common/SlideTitle";
 import {BulletList} from "./common/BulletList";
 import {BulletListItem} from "./common/BulletListItem";
+import {slideWithTitleStyle} from "./common/slide-style";
 
 const functionsImage = require('../../../../assets/azure-functions.png');
 const buzzwordImage = require('../../../../assets/buzzwordmeter.png');
@@ -30,7 +31,7 @@ function WhatIsAzureFunctionsSlideComponent({classes}: Props) {
                       </BulletListItem>
                   </BulletList>
               </div>
-              <div>
+              <div className={classes.images}>
                 <img src={functionsImage} className={classes.image}/>
                 <img src={buzzwordImage} className={classes.image} />
               </div>
@@ -40,11 +41,10 @@ function WhatIsAzureFunctionsSlideComponent({classes}: Props) {
 }
 
 const styles = createStyles({
-    root: {
-        gridTemplateRows: '48px auto',
-    },
-    content: {
-        gridTemplateColumns: '50% 50%'
+    ...slideWithTitleStyle,
+    images: {
+        justifyItems: 'center',
+        alignItems: 'center',
     },
     image: {
         maxHeight: '50%',
