@@ -14,7 +14,7 @@ namespace Realtime.Presenter.Function.V1.Credentials
     {
         [FunctionName("V1GetCredentials")]
         public static HttpResponseMessage GetCredentials(
-            [HttpTrigger(AuthorizationLevel., "get", Route = "v1/credentials")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/credentials")]
             HttpRequestMessage request,
             ILogger logger)
         {
