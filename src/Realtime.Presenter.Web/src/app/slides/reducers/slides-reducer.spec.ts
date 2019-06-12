@@ -22,7 +22,7 @@ describe('slidesReducer', () => {
 
     it('should have slides ordered and ready', () => {
         const state = slidesReducer();
-        expect(state.slides).toHaveLength(14);
+        expect(state.slides).toHaveLength(15);
     });
 
     it('should stay on current slide if current is at the start', () => {
