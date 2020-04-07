@@ -28,11 +28,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Realtime.Presenter.Mobile",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Realtime.Presenter.Mobile.UITests", "tests\Realtime.Presenter.Mobile.UITests\Realtime.Presenter.Mobile.UITests.csproj", "{4C1793E6-1961-4EB3-B5EB-D846D6B7869C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{2E6011F0-A761-4046-8FC7-1B92FEF356B4}"
-	ProjectSection(SolutionItems) = preProject
-		deploy-app.sh = deploy-app.sh
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A836393D-5F4F-43EA-B178-16FCE749F926}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{D5874316-EEFC-4DE8-8BB7-2FD997D8BA08}"
