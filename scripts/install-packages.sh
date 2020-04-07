@@ -3,6 +3,10 @@ set -ex
 
 export GITHUB_WORKSPACE=${GITHUB_WORKSPACE:-$(pwd)}
 
+install_os_dependencies() {
+    brew install terraform
+}
+
 restore_dotnet_packages() {
   dotnet restore
 }
@@ -16,6 +20,7 @@ restore_node_packages() {
 }
 
 main() {
+  install_os_dependencies
   restore_dotnet_packages
   restore_node_packages
 }
