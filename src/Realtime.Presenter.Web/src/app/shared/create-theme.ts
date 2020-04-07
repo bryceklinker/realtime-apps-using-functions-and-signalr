@@ -7,9 +7,6 @@ export function createTheme() {
         palette: {
             primary: blue,
             secondary: yellow
-        },
-        typography: {
-            useNextVariants: true,
         }
     });
 }
