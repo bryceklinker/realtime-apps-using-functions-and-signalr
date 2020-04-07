@@ -1,5 +1,5 @@
-import {wait} from 'react-testing-library';
-
 export function waitForPromises() {
-    return wait(() => {});
+    return new Promise((resolve) => {
+        setImmediate(() => {resolve()});
+    });
 }

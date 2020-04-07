@@ -1,4 +1,4 @@
-import {render, fireEvent} from "react-testing-library";
+import {render, fireEvent} from "@testing-library/react";
 import * as React from "react";
 
 import {configureMockStore} from "../../../testing/configure-mock-store";

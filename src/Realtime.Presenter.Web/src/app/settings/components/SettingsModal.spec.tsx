@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, waitForElement, waitForElementToBeRemoved, fireEvent} from 'react-testing-library';
+import {render, fireEvent} from '@testing-library/react';
 import {SettingsModal} from "./SettingsModal";
 import {SettingsModel} from "../models";
 
@@ -19,7 +19,7 @@ describe('SettingsModal', () => {
     it('should have an open dialog', async () => {
         const {getByTestId} = renderComponent(true);
 
-        await waitForElement(() => getByTestId('settings-modal'));
+        expect(getByTestId('settings-modal')).toBeVisible();
     });
 
     it('should not have an open dialog', async () => {
@@ -27,7 +27,8 @@ describe('SettingsModal', () => {
 
         rerender(<SettingsModal settings={settings} isOpen={false} onSettingsUpdated={onSettingsUpdated}
                                 onSettingsClosed={onSettingsClosed}/>);
-        await waitForElementToBeRemoved(() => getByTestId('settings-modal'));
+        
+        expect(getByTestId('settings-modal')).not.toBeVisible();
     });
 
     it('should call on settings updated', () => {

@@ -1,12 +1,13 @@
 import React from "react";
-import {render, waitForElement} from "react-testing-library";
+import {render} from "@testing-library/react";
 
 import {SlidePresenter} from "./SlidePresenter";
 
 describe('SlidePresenter', () => {
     it('should show slide', async () => {
         const { getByText } = render(<SlidePresenter slide={FakeComponent} onPreviousSlide={jest.fn()} onNextSlide={jest.fn()} />);
-        await waitForElement(() => getByText('This is data'));
+        
+        expect(getByText('This is data')).toBeVisible();
     });
 });
 

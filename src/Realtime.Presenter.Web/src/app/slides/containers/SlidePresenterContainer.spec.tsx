@@ -1,5 +1,5 @@
 import React from "react";
-import {render, waitForElement, fireEvent} from 'react-testing-library';
+import {render, fireEvent} from '@testing-library/react';
 
 import {SlidePresenterContainer} from "./SlidePresenterContainer";
 import {Provider} from "react-redux";
@@ -17,7 +17,8 @@ describe('SlidePresenterContainer', () => {
 
     it('should show the current slide', async () => {
         const {getByText} = renderContainer();
-        await waitForElement(() => getByText(/Welcome/));
+        
+        expect(getByText(/Welcome/)).toBeVisible();
     });
 
     it('should go to next slide', async () => {

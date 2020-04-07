@@ -1,4 +1,4 @@
-import {render, waitForElement, fireEvent} from "react-testing-library";
+import {render, fireEvent} from "@testing-library/react";
 import * as React from "react";
 import {Provider} from "react-redux";
 
@@ -13,7 +13,8 @@ import {selectSettingsBaseUrl} from "../reducers/settings-reducer";
 describe('SettingsModalContainer', () => {
     it('should have open settings', async () => {
         const {getByTestId} = renderContainer(configureMockStore([], openSettings()));
-        await waitForElement(() => getByTestId('settings-modal'));
+        
+        expect(getByTestId('settings-modal')).toBeVisible();
     });
 
     it('should not have open settings', async () => {

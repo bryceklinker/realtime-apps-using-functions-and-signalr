@@ -1,5 +1,4 @@
 import {MockStore} from "redux-mock-store";
-import {wait} from 'react-testing-library';
 
 import {AppState} from "../app-state";
 import {configureMockStore} from "../../../testing/configure-mock-store";
@@ -44,11 +43,6 @@ describe('signalRMiddleware', () => {
 
         store.dispatch(settingsUpdated({baseUrl: 'something'}));
         expect(hubConnection.stop).toHaveBeenCalled();
-    });
-
-    it('should work correctly when connection has not started and settings are changed', async () => {
-        store.dispatch(settingsUpdated({baseUrl: 'https://hello.com'}));
-        await waitForPromises();
     });
 
     it('should dispatch next slide action', () => {
