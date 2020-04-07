@@ -1,9 +1,11 @@
 import React from "react";
 import {createStyles, Typography, WithStyles, withStyles} from "@material-ui/core";
 import {SlideTitle} from "./common/SlideTitle";
+// @ts-ignore
+import functionsImage from '../../../../assets/azure-functions.png';
+// @ts-ignore
+import signalrImage from '../../../../assets/azure-signalr.svg';
 
-const functionsImage = require('../../../../assets/azure-functions.png');
-const signalrImage = require('../../../../assets/azure-signalr.svg');
 
 interface Props extends WithStyles<typeof styles> {
 

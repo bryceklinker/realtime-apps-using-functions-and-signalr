@@ -1,7 +1,7 @@
 import React from 'react';
 import {withStyles, WithStyles, createStyles} from '@material-ui/core';
-
-const thankyou = require('../../../../assets/thankyou.gif')
+// @ts-ignore
+import thankyou from '../../../../assets/thankyou.gif';
 
 interface Props extends WithStyles<typeof styles> {
 

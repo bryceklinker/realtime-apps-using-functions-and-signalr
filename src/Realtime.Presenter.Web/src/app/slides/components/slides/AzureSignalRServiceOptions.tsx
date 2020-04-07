@@ -4,8 +4,8 @@ import {SlideTitle} from "./common/SlideTitle";
 import {slideWithTitleStyle} from "./common/slide-style";
 import {BulletList} from "./common/BulletList";
 import {BulletListItem} from "./common/BulletListItem";
-
-const choices = require('../../../../assets/choices.png');
+// @ts-ignore
+import choices from '../../../../assets/choices.png';
 
 interface Props extends WithStyles<typeof styles> {
 

@@ -4,8 +4,9 @@ import {SlideTitle} from "./common/SlideTitle";
 import {BulletList} from "./common/BulletList";
 import {BulletListItem} from "./common/BulletListItem";
 import {slideWithTitleStyle} from "./common/slide-style";
+// @ts-ignore
+import signalRImage from '../../../../assets/azure-signalr.svg';
 
-const signalRImage = require('../../../../assets/azure-signalr.svg');
 
 interface Props extends WithStyles<typeof styles> {
 

@@ -5,7 +5,8 @@ import {BulletList} from "./common/BulletList";
 import {BulletListItem} from "./common/BulletListItem";
 import {slideWithTitleStyle} from "./common/slide-style";
 
-const improvements = require('../../../../assets/improvements.png');
+// @ts-ignore
+import improvements from '../../../../assets/improvements.png'; 
 
 interface Props extends WithStyles<typeof styles> {
 

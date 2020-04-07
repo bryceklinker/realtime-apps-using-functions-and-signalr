@@ -4,8 +4,8 @@ import {SlideTitle} from "./common/SlideTitle";
 import {BulletList} from "./common/BulletList";
 import {BulletListItem} from "./common/BulletListItem";
 import {slideWithTitleStyle} from "./common/slide-style";
-
-const whyImage = require('../../../../assets/why.jpeg');
+// @ts-ignore
+import whyImage from '../../../../assets/why.jpeg';
 
 interface Props extends WithStyles<typeof styles> {
 

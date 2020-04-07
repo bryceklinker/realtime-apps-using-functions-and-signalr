@@ -4,8 +4,8 @@ import {SlideTitle} from "./common/SlideTitle";
 import {BulletList} from "./common/BulletList";
 import {BulletListItem} from "./common/BulletListItem";
 import {slideWithTitleStyle} from "./common/slide-style";
-
-const functionsImage = require('../../../../assets/azure-functions.png');
+// @ts-ignore
+import functionsImage from '../../../../assets/azure-functions.png';
 
 interface Props extends WithStyles<typeof styles> {
 

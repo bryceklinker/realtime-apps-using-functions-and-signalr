@@ -1,7 +1,7 @@
 import React from 'react';
 import {withStyles, WithStyles, createStyles} from '@material-ui/core';
-
-const questions = require('../../../../assets/questions.jpeg');
+// @ts-ignore
+import questions from '../../../../assets/questions.jpeg';
 
 interface Props extends WithStyles<typeof styles> {
 
