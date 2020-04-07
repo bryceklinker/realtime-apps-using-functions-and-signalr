@@ -337,5 +337,7 @@ dist/
 **/.DS_Store
 
 # Terraform
-
 .terraform/
+
+# Function App
+build/
