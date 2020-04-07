@@ -1,5 +1,5 @@
 import React from "react";
-import {render, waitForElement} from 'react-testing-library';
+import {render} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 
 import {App} from "./App";
@@ -9,7 +9,9 @@ import {configureStore} from "./shared/configure-store";
 describe('App', () => {
     it('should show title header', async () => {
         const history = createMemoryHistory();
+        
         const {getAllByText} = render(<App theme={createTheme()} store={configureStore(history)} history={history}/>);
-        await waitForElement(() => getAllByText('Building Realtime Apps with Azure Functions and SignalR'));
+        
+        expect(getAllByText('Building Realtime Apps with Azure Functions and SignalR')).toHaveLength(1);
     });
 });
