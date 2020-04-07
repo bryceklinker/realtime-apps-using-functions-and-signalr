@@ -8,5 +8,5 @@ locals {
   
   files_container_name = "files"
   deployments_container_name = "deployments"
-  function_app_blob_name = "function.zip"
+  function_app_blob_name = basename(var.function_app_path)
 }
