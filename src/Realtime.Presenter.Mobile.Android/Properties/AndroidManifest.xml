@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.klinker.realtime_presenter_mobile">
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="27" />
+	<uses-sdk android:minSdkVersion="28" android:targetSdkVersion="29" />
 	<application android:label="Realtime.Presenter.Mobile.Android"></application>
 </manifest>

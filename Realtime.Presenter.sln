@@ -34,6 +34,19 @@ ProjectSection(SolutionItems) = preProject
 	deploy-app.sh = deploy-app.sh
 EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A836393D-5F4F-43EA-B178-16FCE749F926}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{D5874316-EEFC-4DE8-8BB7-2FD997D8BA08}"
+ProjectSection(SolutionItems) = preProject
+	.github\workflows\main.yaml = .github\workflows\main.yaml
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{3BB96C03-800B-4E03-A276-74CAE26E452C}"
+ProjectSection(SolutionItems) = preProject
+	scripts\install-packages.sh = scripts\install-packages.sh
+	scripts\run-unit-tests.sh = scripts\run-unit-tests.sh
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -221,5 +234,6 @@ Global
 		{19CFA454-BFAB-4C0F-8750-EA2CC0395507} = {1225CFF0-6662-4AC7-AC68-267C1D6D00C4}
 		{16668423-3D9F-4758-8C82-C370AF211FCB} = {1225CFF0-6662-4AC7-AC68-267C1D6D00C4}
 		{4C1793E6-1961-4EB3-B5EB-D846D6B7869C} = {8374D852-0BF2-4BB3-8546-ED444D8752B6}
+		{D5874316-EEFC-4DE8-8BB7-2FD997D8BA08} = {A836393D-5F4F-43EA-B178-16FCE749F926}
 	EndGlobalSection
 EndGlobal

@@ -28,7 +28,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.6.0" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="NUnit" Version="2.6.4" />
     <PackageReference Include="Xamarin.UITest" Version="2.2.7" />
   </ItemGroup>

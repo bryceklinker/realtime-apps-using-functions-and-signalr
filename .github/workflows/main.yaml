@@ -1,0 +1,25 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  continuous_integration:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+          with:
+            node-version: '12.14.1'
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.200'
+
+      - run: ./scripts/install-packages.sh
+        name: Install Dotnet & Node Packages
+        
+      - run: ./scripts/run-unit-tests.sh
+        name: Run Dotnet and Node Unit Tests
