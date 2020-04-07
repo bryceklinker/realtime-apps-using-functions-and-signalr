@@ -15,7 +15,7 @@ restore_node_packages() {
   npm install --global yarn
   
   pushd ${GITHUB_WORKSPACE}/src/Realtime.Presenter.Web
-    yarn install  
+    yarn install --network-timeout 1000000
   popd
 }
 
