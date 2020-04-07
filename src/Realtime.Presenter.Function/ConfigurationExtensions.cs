@@ -8,15 +8,5 @@ namespace Realtime.Presenter.Function
         {
             return configuration["StorageAccountConnectionString"];
         }
-
-        public static string GetSignalREndpoint(this IConfiguration configuration)
-        {
-            return configuration["SignalR:Endpoint"];
-        }
-
-        public static string GetSignalRKey(this IConfiguration configuration)
-        {
-            return configuration["SignalR:Key"];
-        }
     }
 }
