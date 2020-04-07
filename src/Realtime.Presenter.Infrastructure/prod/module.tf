@@ -3,7 +3,7 @@ module "realtime_presenter_prod" {
   
   env = "prod"
   app_name = "presenter"
-  function_app_path = "../function.zip"
+  function_app_path = "../build/function_app.zip"
   
   common_tags = {
     env = "prod"
