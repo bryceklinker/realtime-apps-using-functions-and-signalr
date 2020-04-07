@@ -45,6 +45,7 @@ resource "azurerm_function_app" "function_app" {
   name = local.function_app_name
   resource_group_name = local.resource_group_name
   storage_connection_string = azurerm_storage_account.storage.primary_connection_string
+  version = "~3"
 
   app_settings = {
     FUNCTIONS_EXTENSION_VERSION = "~3"
