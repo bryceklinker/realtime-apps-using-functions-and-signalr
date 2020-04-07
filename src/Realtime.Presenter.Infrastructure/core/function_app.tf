@@ -59,7 +59,7 @@ resource "azurerm_function_app" "function_app" {
     StorageAccountConnectionString = azurerm_storage_account.storage.primary_connection_string
   }
   
-  site_config = {
+  site_config {
     cors = {
       allowed_origins = [
         "*"
