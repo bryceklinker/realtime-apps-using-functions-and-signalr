@@ -8,7 +8,11 @@ export INFRASTRUCTURE_PATH="${GITHUB_WORKSPACE}/src/Realtime.Presenter.Infrastru
 
 build_function_app() {
     dotnet publish ${FUNCTION_APP_PATH} --configuration Release --output "${INFRASTRUCTURE_PATH}/build/function_app"
-    zip -r "${INFRASTRUCTURE_PATH}/build/function_app.zip" "${INFRASTRUCTURE_PATH}/build/function_app"
+    
+    pushd "${INFRASTRUCTURE_PATH}/build/function_app"
+        zip -r "${INFRASTRUCTURE_PATH}/build/function_app.zip" ./*
+    popd
+     
 }
 
 deploy_infrastructure() {
