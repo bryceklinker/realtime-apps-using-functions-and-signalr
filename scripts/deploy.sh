@@ -10,7 +10,7 @@ export FUNCTION_BUILD_PATH="${INFRASTRUCTURE_PATH}/build/function_app"
 export FUNCTION_ZIP_PATH="${INFRASTRUCTURE_PATH}/build/function_app_${HASH}.zip"
 
 build_function_app() {
-    dotnet publish ${FUNCTION_APP_PATH} --configuration Release --output ${FUNCTION_APP_PATH}
+    dotnet publish ${FUNCTION_APP_PATH} --configuration Release --output ${FUNCTION_BUILD_PATH}
     
     pushd ${FUNCTION_APP_PATH}
         zip -r ${FUNCTION_ZIP_PATH} ./*
