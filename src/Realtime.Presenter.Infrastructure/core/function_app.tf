@@ -58,6 +58,7 @@ resource "azurerm_function_app" "function_app" {
     "SignalR:Key" = azurerm_signalr_service.signalr.primary_access_key
     "SignalR:Endpoint" = "https://${azurerm_signalr_service.signalr.hostname}"
     StorageAccountConnectionString = azurerm_storage_account.storage.primary_connection_string
+    AzureSignalRConnectionString = azurerm_signalr_service.signalr.primary_connection_string
   }
   
   site_config {

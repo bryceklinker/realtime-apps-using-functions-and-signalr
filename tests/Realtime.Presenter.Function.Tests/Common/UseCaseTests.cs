@@ -19,10 +19,7 @@ namespace Realtime.Presenter.Function.Tests.Common
     public class UseCaseTests
     {
         private readonly IServiceProvider _provider;
-        private readonly Mock<CloudBlobClient> _blobClientMock;
         private readonly Mock<CloudBlobContainer> _filesContainerMock;
-
-        private FakeLogger Logger { get; }
 
         protected FakeHttpClient HttpClient { get; }
 
@@ -33,8 +30,7 @@ namespace Realtime.Presenter.Function.Tests.Common
         protected UseCaseTests()
         {
             var loggerFactory = new FakeLoggerFactory();
-            Logger = loggerFactory.Logger;
-            
+
             var httpClientFactory = new FakeHttpClientFactory();
             HttpClient = httpClientFactory.Client;
             
@@ -49,11 +45,11 @@ namespace Realtime.Presenter.Function.Tests.Common
                     mock.Setup(s => s.ExistsAsync()).ReturnsAsync(false);
                     return mock.Object;
                 });
-            _blobClientMock = new Mock<CloudBlobClient>(new Uri("https://something.com"));
-            _blobClientMock.Setup(s => s.GetContainerReference("files")).Returns(_filesContainerMock.Object);
+            var blobClientMock = new Mock<CloudBlobClient>(new Uri("https://something.com"));
+            blobClientMock.Setup(s => s.GetContainerReference("files")).Returns(_filesContainerMock.Object);
 
             StorageAccount = new Mock<CloudStorageAccount>(new StorageCredentials("storageaccount", ""), false);
-            StorageAccount.Setup(s => s.CreateCloudBlobClient()).Returns(_blobClientMock.Object);
+            StorageAccount.Setup(s => s.CreateCloudBlobClient()).Returns(blobClientMock.Object);
             
             var storageAccountFactory = new Mock<IStorageAccountFactory>();
             storageAccountFactory.Setup(s => s.Get()).Returns(StorageAccount.Object);
