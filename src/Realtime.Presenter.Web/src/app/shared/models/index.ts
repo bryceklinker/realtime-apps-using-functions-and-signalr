@@ -1,4 +1,4 @@
 export interface Credentials {
-    signalRToken: string;
-    signalRUrl: string;
+    accessToken: string;
+    url: string;
 }

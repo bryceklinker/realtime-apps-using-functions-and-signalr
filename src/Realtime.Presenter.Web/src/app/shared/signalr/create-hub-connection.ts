@@ -1,10 +1,8 @@
-import {Credentials} from "../models";
 import {HubConnectionBuilder} from "@aspnet/signalr";
+import {SettingsModel} from '../../settings/models';
 
-export function createHubConnection(credentials: Credentials) {
+export function createHubConnection(settings: SettingsModel) {
     return new HubConnectionBuilder()
-        .withUrl(credentials.signalRUrl, {
-            accessTokenFactory: () => credentials.signalRToken
-        })
+        .withUrl(`${settings.baseUrl}/api`)
         .build();
 }
