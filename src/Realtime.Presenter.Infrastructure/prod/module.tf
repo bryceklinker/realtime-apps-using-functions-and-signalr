@@ -14,7 +14,7 @@ module "realtime_presenter_prod" {
   source = "../core"
   
   env = var.env
-  app_name = var.env
+  app_name = var.app_name
   function_app_path = var.function_app_path
   
   common_tags = {
