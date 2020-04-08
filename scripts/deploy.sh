@@ -32,6 +32,9 @@ deploy_infrastructure() {
 }
 
 copy_web_content_to_blob_storage() {
+    az login --service-principal -u ${ARM_CLIENT_ID} -p ${ARM_CLIENT_SECRET} --tenant ${ARM_TENANT_ID}
+    az account set --subscription ${ARM_SUBSCRIPTION_ID}
+
     pushd ${WEB_SOURCE_PATH}
         yarn build
         
