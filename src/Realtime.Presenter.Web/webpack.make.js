@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 
 module.exports = function (env) {
+    const functionName = process.env.FUNCTION_NAME;
     return {
         devtool: 'source-map',
         entry: {
@@ -40,7 +41,7 @@ module.exports = function (env) {
             }),
             new DefinePlugin({
                 FUNCTION_URL: isProd(env)
-                    ? JSON.stringify('https://realtime-app-func.azurewebsites.net')
+                    ? JSON.stringify(`https://${functionName}.azurewebsites.net`)
                     : JSON.stringify('http://localhost:7071')
             })
         ]
