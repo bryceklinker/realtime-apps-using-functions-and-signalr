@@ -13,7 +13,7 @@ function ReferencesComponent({classes}: Props) {
             <BulletList>
                 <BulletListItemLink href={'https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings#supported-bindings'}
                                     text={'Supported Function Triggers'} />
-                <BulletListItemLink href={'https://github.com/bryce-klinker/realtime-apps-using-functions-and-signalr'}
+                <BulletListItemLink href={'https://github.com/bryceklinker/realtime-apps-using-functions-and-signalr'}
                                     text={'GitHub Repo'} />
             </BulletList>
         </div>
