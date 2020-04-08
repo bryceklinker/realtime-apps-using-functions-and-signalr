@@ -11,7 +11,7 @@ export INFRASTRUCTURE_PATH="${GITHUB_WORKSPACE}/src/Realtime.Presenter.Infrastru
 export FUNCTION_BUILD_PATH="${INFRASTRUCTURE_PATH}/build/function_app"
 export FUNCTION_ZIP_PATH="${INFRASTRUCTURE_PATH}/build/function_app_${HASH}.zip"
 export WEB_SOURCE_PATH="${GITHUB_WORKSPACE}/src/Realtime.Presenter.Web"
-export STORAGE_ACCOUNT_NAME="stp${APP_NAME}${ENVIRONMENT}"
+export STORAGE_ACCOUNT_NAME="st${APP_NAME}${ENVIRONMENT}"
 export STORAGE_FILES_CONTAINER="files"
 
 build_function_app() {
