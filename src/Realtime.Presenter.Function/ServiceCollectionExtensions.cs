@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Realtime.Presenter.Function.Common.SignalR;
 using Realtime.Presenter.Function.Common.Storage;
 using Realtime.Presenter.Function.Credentials;
 using Realtime.Presenter.Function.Files;
