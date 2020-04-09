@@ -8,10 +8,12 @@ import {goToNextSlide, goToPreviousSlide} from "../../slides/actions";
 import {settingsUpdated} from "../../settings/actions";
 import {waitForPromises} from "../../../testing/wait-for-promises";
 import {SettingsModel} from '../../settings/models';
-import {AccountBalanceWallet} from '@material-ui/icons';
+import {initialize} from '../actions';
+import {selectSettings} from '../../settings/reducers/settings-reducer';
 
 describe('signalRMiddleware', () => {
-    let settings: SettingsModel;
+    let initialSettings: SettingsModel;
+    let updatedSettings: SettingsModel;
     let store: MockStore<AppState>;
     let hubConnection: FakeHubConnection;
     let createHubConnection: jest.Mock;
@@ -19,51 +21,39 @@ describe('signalRMiddleware', () => {
     beforeEach(() => {
         hubConnection = new FakeHubConnection();
         createHubConnection = jest.fn().mockReturnValue(hubConnection);
-        settings = {
-            baseUrl: 'https://signalr.com'
-        };
-
         store = configureMockStore([createSignalRMiddleware(createHubConnection)]);
+
+        initialSettings = selectSettings(store.getState());
+        updatedSettings = {
+            baseUrl: 'http://something.com'
+        };
+        
+        store.dispatch(initialize());
     });
 
-    it('should create signalr hub', async () => {
-        store.dispatch(settingsUpdated(settings));
-        
+    it('should start hub when initialized', async () => {
         await waitForPromises();
         
-        expect(createHubConnection).toHaveBeenCalledWith(settings);
-    });
-
-    it('should start signalr connection', async () => {
-        store.dispatch(settingsUpdated(settings));
-
-        await waitForPromises();
-        
+        expect(createHubConnection).toHaveBeenCalledWith(initialSettings);
         expect(hubConnection.start).toHaveBeenCalled();
     });
-
-    it('should stop signalr connection when settings are changed', async () => {
-        store.dispatch(settingsUpdated(settings));
-        await waitForPromises();
-
-        store.dispatch(settingsUpdated({baseUrl: 'something'}));
+    
+    it('should restart signalr hub when settings are updated', async () => {
+        store.dispatch(settingsUpdated(updatedSettings));
+        
         await waitForPromises();
         
         expect(hubConnection.stop).toHaveBeenCalled();
+        expect(hubConnection.start).toHaveBeenCalled();
+        expect(createHubConnection).toHaveBeenCalledWith(updatedSettings);
     });
 
     it('should dispatch next slide action', async () => {
-        store.dispatch(settingsUpdated(settings));
-        await waitForPromises();
-        
         hubConnection.trigger('nextSlide');
         expect(store.getActions()).toContainEqual(goToNextSlide());
     });
 
     it('should dispatch previous slide action', async () => {
-        store.dispatch(settingsUpdated(settings));
-        await waitForPromises();
-        
         hubConnection.trigger('previousSlide');
         expect(store.getActions()).toContainEqual(goToPreviousSlide());
     });
