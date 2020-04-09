@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +18,8 @@ namespace Realtime.Presenter.Function.Presentations
         {
             await signalR.AddAsync(new SignalRMessage
             {
-                Target = "nextSlide"
+                Target = "nextSlide",
+                Arguments = Array.Empty<object>()
             }, CancellationToken.None);
             return new OkResult();
         }
@@ -29,7 +31,8 @@ namespace Realtime.Presenter.Function.Presentations
         {
             await signalR.AddAsync(new SignalRMessage
             {
-                Target = "previousSlide"
+                Target = "previousSlide",
+                Arguments = Array.Empty<object>()
             }, CancellationToken.None);
             return new OkResult();
         }

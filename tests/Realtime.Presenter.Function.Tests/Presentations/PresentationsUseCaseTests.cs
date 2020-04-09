@@ -33,6 +33,7 @@ namespace Realtime.Presenter.Function.Tests.Presentations
             result.Should().BeOfType<OkResult>();
             _collector.AddedItems.Should().HaveCount(1);
             _collector.AddedItems.Single().Target.Should().Be("nextSlide");
+            _collector.AddedItems.Single().Arguments.Should().BeEmpty();
         }
 
         [Fact]
@@ -43,6 +44,7 @@ namespace Realtime.Presenter.Function.Tests.Presentations
             result.Should().BeOfType<OkResult>();
             _collector.AddedItems.Should().HaveCount(1);
             _collector.AddedItems.Single().Target.Should().Be("previousSlide");
+            _collector.AddedItems.Single().Arguments.Should().BeEmpty();
         }
     }
 }
