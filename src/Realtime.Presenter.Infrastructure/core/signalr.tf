@@ -8,5 +8,9 @@ resource "azurerm_signalr_service" "signalr" {
     name = "Free_F1"
   }
 
+  features {
+    flag = "ServiceMode"
+    value = "Serverless"
+  }
   tags = var.common_tags
 }
