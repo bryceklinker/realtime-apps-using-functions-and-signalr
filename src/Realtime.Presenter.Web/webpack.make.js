@@ -11,7 +11,7 @@ module.exports = function (env) {
         },
         output: {
             path: path.resolve(__dirname, 'dist'),
-            filename: '[name].js',
+            filename: isProd(env) ? '[name].[hash].js' : '[name].js',
             sourceMapFilename: '[file].map'
         },
         resolve: {
