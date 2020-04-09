@@ -53,18 +53,13 @@ resource "azurerm_function_app" "function_app" {
     FUNCTIONS_WORKER_RUNTIME = "dotnet"
     https_only = true
     FUNCTION_APP_EDIT_MODE = "readonly"
-    HASH = base64encode(filesha256(var.function_app_path))
     WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.storage.name}.blob.core.windows.net/${azurerm_storage_container.deployments.name}/${azurerm_storage_blob.function_app_blob.name}${data.azurerm_storage_account_sas.function_shared_access.sas}"
-    "SignalR:Key" = azurerm_signalr_service.signalr.primary_access_key
-    "SignalR:Endpoint" = "https://${azurerm_signalr_service.signalr.hostname}"
     StorageAccountConnectionString = azurerm_storage_account.storage.primary_connection_string
     AzureSignalRConnectionString = azurerm_signalr_service.signalr.primary_connection_string
   }
   
   site_config {
-    websockets_enabled = true
     cors {
-      support_credentials = true
       allowed_origins = [
         "*"
       ] 
