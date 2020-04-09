@@ -63,6 +63,7 @@ resource "azurerm_function_app" "function_app" {
   
   site_config {
     cors {
+      support_credentials = true
       allowed_origins = [
         "*"
       ] 

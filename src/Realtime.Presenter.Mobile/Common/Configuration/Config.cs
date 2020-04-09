@@ -19,11 +19,9 @@ namespace Realtime.Presenter.Mobile.Common.Configuration
         private static JObject GetSettings()
         {
             var applicationType = typeof(App);
-            using (var stream = applicationType.Assembly.GetManifestResourceStream($"{applicationType.Namespace}.appsettings.json"))
-            using (var reader = new StreamReader(stream))
-            {
-                return JObject.Load(new JsonTextReader(reader));
-            }
+            using var stream = applicationType.Assembly.GetManifestResourceStream($"{applicationType.Namespace}.appsettings.json");
+            using var reader = new StreamReader(stream);
+            return JObject.Load(new JsonTextReader(reader));
         }
     }
 }
