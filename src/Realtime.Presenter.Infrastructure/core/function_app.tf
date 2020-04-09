@@ -62,6 +62,7 @@ resource "azurerm_function_app" "function_app" {
   }
   
   site_config {
+    websockets_enabled = true
     cors {
       support_credentials = true
       allowed_origins = [
