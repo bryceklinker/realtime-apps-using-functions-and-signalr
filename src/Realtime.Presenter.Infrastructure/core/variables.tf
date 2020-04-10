@@ -18,3 +18,15 @@ variable "location" {
   type = string
   default = "centralus"
 }
+
+variable "aws_access_key" {
+  type = string
+}
+
+variable "aws_secret_key" {
+  type = string
+}
+
+variable "aws_default_region" {
+  type = string
+}

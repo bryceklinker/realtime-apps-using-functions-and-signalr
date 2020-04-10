@@ -18,7 +18,7 @@ describe('SlidePresenterContainer', () => {
     it('should show the current slide', async () => {
         const {getByText} = renderContainer();
         
-        expect(getByText(/Welcome/)).toBeVisible();
+        expect(getByText(/Junto/)).toBeVisible();
     });
 
     it('should go to next slide', async () => {

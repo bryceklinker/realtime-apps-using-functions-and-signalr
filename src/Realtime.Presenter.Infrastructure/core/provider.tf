@@ -3,3 +3,7 @@ provider "azurerm" {
   
   features {}
 }
+
+provider "aws" {
+  version = "~> 3.0"
+}

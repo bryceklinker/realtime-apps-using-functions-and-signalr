@@ -25,6 +25,10 @@ build_function_app() {
 }
 
 deploy_infrastructure() {
+    export TF_VAR_aws_access_key=${AWS_ACCESS_KEY_ID}
+    export TF_VAR_aws_secret_key=${AWS_SECRET_ACCESS_KEY}
+    export TF_VAR_aws_default_region=${AWS_DEFAULT_REGION}
+
     pushd ${INFRASTRUCTURE_PATH}/prod
         terraform init
         terraform plan -out=deploy.tfplan -var="function_app_path=${FUNCTION_ZIP_PATH}" -var="env=${ENVIRONMENT}" -var="app_name=${APP_NAME}"
