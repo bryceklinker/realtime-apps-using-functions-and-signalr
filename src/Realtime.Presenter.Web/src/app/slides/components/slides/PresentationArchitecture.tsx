@@ -27,7 +27,8 @@ const styles = createStyles({
         justifyItems: 'center'
     },
     img: {
-        maxHeight: '100%'
+        maxHeight: '100%',
+        maxWidth: '100%'
     }
 });
 

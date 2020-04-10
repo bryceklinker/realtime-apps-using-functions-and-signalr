@@ -14,15 +14,10 @@ interface Props extends WithStyles<typeof styles> {
 function OpeningSlideComponent({ classes }: Props) {
     return (
         <div className={classes.root}>
-            <SlideTitle title={'Welcome to .NET@Noon'} />
+            <SlideTitle title={'Junto'} />
             <div className={classes.images}>
                 <div><img className={classes.image} src={functionsImage} width={'50%'}/></div>
                 <div><img className={classes.image} src={signalrImage} width={'50%'}/></div>
-            </div>
-            <div className={classes.bottom}>
-                <Typography variant={'h3'}>
-                    Presentation is at: https://bit.ly/2Kk5TXI
-                </Typography>
             </div>
         </div>
     );

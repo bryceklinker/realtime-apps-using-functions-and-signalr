@@ -12,7 +12,7 @@ interface Props extends WithStyles<typeof styles> {
 
 }
 
-function AzureFunctionsV1VsV2Component({classes}: Props) {
+function AzureFunctionsVersionsComponent({classes}: Props) {
     return (
         <div className={classes.root}>
             <SlideTitle title={'Azure Functions V1 vs V2'} />
@@ -22,15 +22,20 @@ function AzureFunctionsV1VsV2Component({classes}: Props) {
                         <BulletListItem text={'V1'}>
                             <BulletList>
                                 <BulletListItem text={'Required static class/methods'} />
-                                <BulletListItem text={'Dependency injection unofficially supported'} />
                                 <BulletListItem text={'Logger given to static method'} />
+                                <BulletListItem text={'.NET Framework 4.7.2'} />
                             </BulletList>
                         </BulletListItem>
                         <BulletListItem text={'V2'}>
                             <BulletList>
                                 <BulletListItem text={'Static class/method no longer required'} />
-                                <BulletListItem text={'Dependency injection officially supported'} />
                                 <BulletListItem text={'Logger can be injected'} />
+                                <BulletListItem text={'.NET Core 2.2'} />
+                            </BulletList>
+                        </BulletListItem>
+                        <BulletListItem text={'V3'}>
+                            <BulletList>
+                                <BulletListItem text={'.NET Core 3.1'} />
                             </BulletList>
                         </BulletListItem>
                     </BulletList>
@@ -53,4 +58,4 @@ const styles = createStyles({
     }
 });
 
-export const AzureFunctionsV1VsV2Slide = withStyles(styles)(AzureFunctionsV1VsV2Component);
+export const AzureFunctionsVersionsSlide = withStyles(styles)(AzureFunctionsVersionsComponent);

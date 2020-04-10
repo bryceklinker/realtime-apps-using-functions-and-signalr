@@ -18,13 +18,13 @@ function WhatIsAzureFunctionsSlideComponent({classes}: Props) {
           <div className={classes.content}>
               <div>
                   <BulletList>
-                      <BulletListItem text={'Serverless'} />
-                      <BulletListItem text={'AWS Lambda Differences'} />
+                      <BulletListItem text={'Serverless (Buzzword)'} />
                       <BulletListItem text={'Many Triggers available'}>
                           <BulletList>
                               <BulletListItem text={'Service Bus'} />
                               <BulletListItem text={'HTTP / Webhook'} />
                               <BulletListItem text={'Event Hub'} />
+                              <BulletListItem text={'SignalR'} />
                               <BulletListItem text={'19 total triggers'} />
                           </BulletList>
                       </BulletListItem>

@@ -6,18 +6,17 @@ import {AppState} from "../../shared/app-state";
 import {OpeningSlide} from "../components/slides/OpeningSlide";
 import {AgendaSlide} from "../components/slides/AgendaSlide";
 import {WhatIsAzureFunctionsSlide} from "../components/slides/WhatIsAzureFunctionsSlide";
-import {AzureFunctionsV1VsV2Slide} from "../components/slides/AzureFunctionsV1VsV2Slide";
 import {ReferencesSlide} from "../components/slides/ReferencesSlide";
 import {WhatIsAzureSignalRSlide} from "../components/slides/WhatIsAzureSignalRSlide";
 import {WhyShouldYouCareSlide} from "../components/slides/WhyShouldYouCareSlide";
 import {ThankYouSlide} from "../components/slides/ThankYouSlide";
-import {AzureSignalRServiceOptions} from "../components/slides/AzureSignalRServiceOptions";
 import {QuestionsSlide} from "../components/slides/QuestionsSlide";
 import {FeedbackSlide } from '../components/slides/FeedbackSlide';
 import {CodeSlide} from "../components/slides/CodeSlide";
 import {WhatAreRealtimeApplicationsSlide} from "../components/slides/WhatAreRealtimeApplicationsSlide";
-import {RealtimeApplicationExamplesSlide} from "../components/slides/RealtimeApplicationExamplesSlide";
 import {PresentationArchitectureSlide} from "../components/slides/PresentationArchitecture";
+import {WhatIsTerraformSlide} from '../components/slides/WhatIsTerraformSlide';
+import {WhatIsGitHubActionsSlide} from '../components/slides/WhatIsGitHubActionsSlide';
 
 export interface SlidesState {
     currentSlideIndex: number;
@@ -30,12 +29,11 @@ const initialState: SlidesState = {
         OpeningSlide,
         AgendaSlide,
         WhatAreRealtimeApplicationsSlide,
-        RealtimeApplicationExamplesSlide,
         WhyShouldYouCareSlide,
         WhatIsAzureFunctionsSlide,
-        AzureFunctionsV1VsV2Slide,
         WhatIsAzureSignalRSlide,
-        AzureSignalRServiceOptions,
+        WhatIsTerraformSlide,
+        WhatIsGitHubActionsSlide,
         PresentationArchitectureSlide,
         CodeSlide,
         QuestionsSlide,

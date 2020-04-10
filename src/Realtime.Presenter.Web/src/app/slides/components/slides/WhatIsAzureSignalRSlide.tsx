@@ -22,7 +22,8 @@ function WhatIsAzureSignalRSlideComponent({classes}: Props) {
                         <BulletListItem text={'Web Sockets'} />
                         <BulletListItem text={'A hosted version of ASP.NET Core SignalR'}/>
                         <BulletListItem text={'Highly scalable'} />
-                        <BulletListItem text={'Recently support for ASP.NET SignalR has been added'}/>
+                        <BulletListItem text={'ASP.NET SignalR supported'}/>
+                        <BulletListItem text={'Serverless'}/>
                     </BulletList>
                 </div>
                 <div className={classes.images}>

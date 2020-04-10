@@ -18,6 +18,8 @@ function AgendaSlideComponent({classes}: Props) {
                     <BulletListItem text={'Why should you care?'}/>
                     <BulletListItem text={'What is Azure Functions?'}/>
                     <BulletListItem text={'What is Azure SignalR?'}/>
+                    <BulletListItem text={'What is Terraform?'}/>
+                    <BulletListItem text={'What is GitHub Actions?'}/>
                     <BulletListItem text={'Code'}/>
                     <BulletListItem text={'Questions'}/>
                     <BulletListItem text={'Feedback'}/>
