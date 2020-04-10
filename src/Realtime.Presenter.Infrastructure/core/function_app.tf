@@ -56,6 +56,9 @@ resource "azurerm_function_app" "function_app" {
     WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.storage.name}.blob.core.windows.net/${azurerm_storage_container.deployments.name}/${azurerm_storage_blob.function_app_blob.name}${data.azurerm_storage_account_sas.function_shared_access.sas}"
     StorageAccountConnectionString = azurerm_storage_account.storage.primary_connection_string
     AzureSignalRConnectionString = azurerm_signalr_service.signalr.primary_connection_string
+    AWS_ACCESS_KEY = var.aws_access_key
+    AWS_SECRET_KEY = var.aws_secret_key
+    AWS_DEFAULT_REGION = var.aws_default_region
   }
   
   site_config {
