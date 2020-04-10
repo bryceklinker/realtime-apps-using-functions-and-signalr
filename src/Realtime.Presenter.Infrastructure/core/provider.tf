@@ -4,6 +4,6 @@ provider "azurerm" {
   features {}
 }
 
-provider "aws" {
-  version = "~> 2.8"
-}
+//provider "aws" {
+//  version = "~> 2.8"
+//}
